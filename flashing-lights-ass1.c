@@ -61,7 +61,7 @@ void loop()
       //    C    | hash - dot - hash - dot
 	//
 
-
+/*
 void loop()
 {
 	// Flash first letter: F ( dot / dot / hash / dot)
@@ -90,6 +90,21 @@ void loop()
   delay(spaceWordsDelay-dotDelay); 
 }
 
+*/
+
+      //
+      // Level 3 - Ambulance Flash
+      //
+
+/*
+
+void loop()
+{
+  fastBlinkBlueLED();
+  fastBlinkRedLED();
+} 
+
+*/
 
 
 // Funtions
