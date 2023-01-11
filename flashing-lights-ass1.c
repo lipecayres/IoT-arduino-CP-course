@@ -32,6 +32,25 @@ void setup()
 
 
 
+	//
+	//               Level 1 
+	// Flash slow 3 times and quickly 3 times
+	//
+
+/*
+
+void loop()
+{
+  // Make flash slow three times
+	slowBlinkBlueLED(3);
+
+  // Make flash quickly three times
+	fastBlinkBlueLED(3);
+}  
+
+*/
+
+
 
 // Funtions
 
