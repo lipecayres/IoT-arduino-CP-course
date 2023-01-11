@@ -50,6 +50,46 @@ void loop()
 
 */
 
+	//	
+	// 			Level 2 
+	//   Initials using Morse Code 
+	//   dot = 100mS (fast) / hash = 1000mS (slow)
+	//
+      // Initial | Morse Code
+      //    F    | dot - dot - hash - dot
+      //    S    | dot - dot - dot
+      //    C    | hash - dot - hash - dot
+	//
+
+
+void loop()
+{
+	// Flash first letter: F ( dot / dot / hash / dot)
+
+  fastBlinkBlueLED(2);
+  slowBlinkBlueLED(1); 
+  fastBlinkBlueLED(1);
+  
+  delay(spaceLettersDelay-dotDelay); 
+
+
+  	// Flash second letter: S (dot / dot / dot)
+
+  fastBlinkBlueLED(3); 
+
+  delay(spaceLettersDelay-dotDelay); 
+
+
+	// Flash third letter: C (hash / dot / hash / dot)
+
+  slowBlinkBlueLED(1); 
+  fastBlinkBlueLED(1); 
+  slowBlinkBlueLED(1); 
+  fastBlinkBlueLED(1); 
+
+  delay(spaceWordsDelay-dotDelay); 
+}
+
 
 
 // Funtions
