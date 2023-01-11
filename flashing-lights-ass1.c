@@ -22,6 +22,14 @@ void slowBlinkBlueLED (int times);
 void fastBlinkRedLED (int times);
 void slowBlinkRedLED (int times);
 
+// Setup
+
+void setup()
+{
+  pinMode(blueLED, OUTPUT);
+  pinMode(redLED, OUTPUT);
+}
+
 
 
 
