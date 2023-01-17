@@ -135,6 +135,50 @@ void loop(){
 
 
 
+	//
+	// Level 4 - Random number personalized 15 second light show
+	//
+
+
+void loop () {
+
+  int getRandomTime = random(500,1000);
+  int cronometre = 0;	
+  int timeLimit = 15000;
+  float speedBlink = getRandomTime / 14;
+
+  Serial.print(getRandomTime);
+  Serial.println("sec");
+  
+  do
+  {
+    cronometre = cronometre + getRandomTime;
+    
+    redColor(speedBlink);
+    blueColor(speedBlink);
+    redColor(speedBlink);
+    blueColor(speedBlink);
+    redColor(speedBlink);
+    blueColor(speedBlink);
+    whiteColor(speedBlink);
+    greenColor(speedBlink);  
+    magentaColor(speedBlink);
+    greenColor(speedBlink);  
+    magentaColor(speedBlink);
+    yellowColor(speedBlink);
+    cyanColor(speedBlink);
+    blueColor(speedBlink);
+  	
+  }
+  while(cronometre <= timeLimit);
+
+  for (int i=1000; i <=5000; i = i+1000){
+	  whiteColor(1000);
+  }
+
+}
+
+
   //Display Red color
 void redColor (float TIME)
 {
