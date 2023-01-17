@@ -3,3 +3,10 @@
 // 200548559 - Felipe Simoes Cayres
 //
 //
+
+
+// Variables
+int RGBRedPin = 9; //The red RGB LED is connected pin 9 of the Arduino.
+int RGBGreenPin = 10; //The green RGB LED is connected pin 10 of the Arduino.
+int RGBBluePin = 11; //The blue RGB LED is connected pin 11 of the Arduino.
+int waitTime = 2000; //Sets the amount of time to wait between color changes.
