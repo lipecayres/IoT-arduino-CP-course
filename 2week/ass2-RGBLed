@@ -125,5 +125,17 @@ void cyanColor (float TIME){
   digitalWrite(RGBGreenPin, LOW); //Turn off GREEN
 }
 
+ 
+  //Display White (Red + Blue + Green)
+void whiteColor (float TIME){
+  digitalWrite(RGBRedPin, HIGH); //Turn on RED
+  digitalWrite(RGBBluePin, HIGH); //Turn on BLUE
+  digitalWrite(RGBGreenPin, HIGH); //Turn on GREEN
+  delay(TIME); //Set time delay 
+  digitalWrite(RGBRedPin, LOW); //Turn off RED
+  digitalWrite(RGBBluePin, LOW); //Turn off BLUE
+  digitalWrite(RGBGreenPin, LOW); //Turn off GREEN
+}
+
 
 
