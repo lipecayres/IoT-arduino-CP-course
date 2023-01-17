@@ -76,7 +76,6 @@ digitalWrite(RGBGreenPin, LOW); //Turn off GREEN
 }
 */
 
-
 		//
 		// Level 2 - Create your own personalized 15 second light show
 		//
@@ -132,8 +131,6 @@ void loop(){
 }
 
 */
-
-
 
 	//
 	// Level 4 - Random number personalized 15 second light show
