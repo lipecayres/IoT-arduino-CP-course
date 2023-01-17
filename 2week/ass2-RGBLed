@@ -116,6 +116,14 @@ void yellowColor (float TIME){
   digitalWrite(RGBGreenPin, LOW); //Turn of RED
 }
 
+  //Display Cyan (Blue + Green)
+void cyanColor (float TIME){
+  digitalWrite(RGBBluePin, HIGH); //Turn on BLUE
+  digitalWrite(RGBGreenPin, HIGH); //Turn on GREEN
+  delay(TIME); //Set time delay 
+  digitalWrite(RGBBluePin, LOW); //Turn of BLUE
+  digitalWrite(RGBGreenPin, LOW); //Turn off GREEN
+}
 
 
 
