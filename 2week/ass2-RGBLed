@@ -20,3 +20,58 @@ pinMode(RGBBluePin, OUTPUT); //Setup blue RGB LED pin as an output pin.
   Serial.begin(9600);
   
 }
+
+		//
+		// Level 1 - Copy and paste the source code 
+		//
+
+/*
+
+void loop() { //The loop function runs forever.
+
+  //Display Red
+digitalWrite(RGBRedPin, HIGH); //Turn on RED
+delay(waitTime); //Wait for 2 seconds
+digitalWrite(RGBRedPin, LOW); //Turn off Red
+
+  //Display Green
+digitalWrite(RGBGreenPin, HIGH); //Turn on RED
+delay(waitTime); //Wait for 2 seconds
+digitalWrite(RGBGreenPin, LOW); //Turn off Red
+
+  //Display Blue
+digitalWrite(RGBBluePin, HIGH); //Turn on RED
+delay(waitTime); //Wait for 2 seconds
+digitalWrite(RGBBluePin, LOW); //Turn off Red
+
+  //Display Magenta (Red + Blue)
+digitalWrite(RGBRedPin, HIGH); //Turn on RED
+digitalWrite(RGBBluePin, HIGH); //Turn on RED
+delay(waitTime); //Wait for 2 seconds
+digitalWrite(RGBRedPin, LOW); //Turn off Red
+digitalWrite(RGBBluePin, LOW); //Turn on RED
+
+  //Display Yellow (Red + Green)
+digitalWrite(RGBRedPin, HIGH); //Turn on RED
+digitalWrite(RGBGreenPin, HIGH); //Turn on RED
+delay(waitTime); //Wait for 2 seconds
+digitalWrite(RGBRedPin, LOW); //Turn off Red
+digitalWrite(RGBGreenPin, LOW); //Turn of RED
+
+  //Display Cyan (Blue + Green)
+digitalWrite(RGBBluePin, HIGH); //Turn on BLUE
+digitalWrite(RGBGreenPin, HIGH); //Turn on GREEN
+delay(waitTime); //Wait for 2 seconds
+digitalWrite(RGBBluePin, LOW); //Turn of BLUE
+digitalWrite(RGBGreenPin, LOW); //Turn off GREEN
+
+  //Display White (Red + Blue + Green)
+digitalWrite(RGBRedPin, HIGH); //Turn on RED
+digitalWrite(RGBBluePin, HIGH); //Turn on BLUE
+digitalWrite(RGBGreenPin, HIGH); //Turn on GREEN
+delay(waitTime); //Wait for 2 seconds
+digitalWrite(RGBRedPin, LOW); //Turn off RED
+digitalWrite(RGBBluePin, LOW); //Turn off BLUE
+digitalWrite(RGBGreenPin, LOW); //Turn off GREEN
+}
+*/
