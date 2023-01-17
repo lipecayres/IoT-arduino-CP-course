@@ -91,6 +91,14 @@ void greenColor(float TIME) {
   digitalWrite(RGBGreenPin, LOW); //Turn off Red
 }
 
+  //Display Blue
+void blueColor (float TIME){
+  digitalWrite(RGBBluePin, HIGH); //Turn on RED
+  delay(TIME); //Set time delay
+  digitalWrite(RGBBluePin, LOW); //Turn off Red
+}
+
+
 
 
 
