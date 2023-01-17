@@ -76,6 +76,37 @@ digitalWrite(RGBGreenPin, LOW); //Turn off GREEN
 }
 */
 
+
+		//
+		// Level 2 - Create your own personalized 15 second light show
+		//
+
+/*
+
+void loop() { 
+
+  redColor(1000);
+  blueColor(1000);
+  redColor(1000);
+  blueColor(1000);
+  redColor(1000);
+  blueColor(1000);
+  whiteColor(2000);
+  greenColor(1000);  
+  magentaColor(1000);
+  greenColor(1000);  
+  magentaColor(1000);
+  yellowColor(1000);
+  cyanColor(1000);
+  blueColor(1000);
+
+}
+
+*/
+
+
+
+
   //Display Red color
 void redColor (float TIME)
 {
