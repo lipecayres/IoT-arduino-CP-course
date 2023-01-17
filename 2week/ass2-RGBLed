@@ -98,6 +98,14 @@ void blueColor (float TIME){
   digitalWrite(RGBBluePin, LOW); //Turn off Red
 }
 
+  //Display Magenta (Red + Blue)
+void magentaColor (float TIME){
+  digitalWrite(RGBRedPin, HIGH); //Turn on RED
+  digitalWrite(RGBBluePin, HIGH); //Turn on RED
+  delay(TIME); //Set time delay 
+  digitalWrite(RGBRedPin, LOW); //Turn off Red
+  digitalWrite(RGBBluePin, LOW); //Turn on RED
+}
 
 
 
