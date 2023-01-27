@@ -46,6 +46,48 @@ void loop() { //The loop function runs forever.
 */
 
 
+	//
+	// Level 2 - Color speed controlled by Rotation dial A0
+	//
+
+/*
+
+// Setup
+
+void setup() { //The Setup function runs once.
+
+  pinMode(RGBRedPin, OUTPUT); //Setup red RGB LED pin as an output pin.
+  pinMode(RGBGreenPin, OUTPUT); //Setup green RGB LED pin as an output pin.
+  pinMode(RGBBluePin, OUTPUT); //Setup blue RGB LED pin as an output pin.
+
+  Serial.begin(9600); //Send data to the Serial monitor.
+  pinMode(rotationPin,INPUT); //Setup rotationPin as an input.
+  
+} 
+
+
+void loop() { //The loop function runs forever.
+	
+  // Read the value from the light sensor 
+  // and store it in the lightData variable.
+  // Inverted counter (Start slower and become fast).
+  data = 1023 - analogRead(rotationPin); 
+  
+  Serial.print("Rotation value =");
+  Serial.println(data); //Print the data to the serial port.
+  
+  if (data ==0) data = 1; // Faster time visible on LED
+  if (data ==1023) return;  // rotationPin turned off
+  
+  // three colors blinking
+  redColor(data);
+  greenColor(data);
+  blueColor(data);  
+  
+}
+
+*/
+
 
 
 
