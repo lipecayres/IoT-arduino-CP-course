@@ -144,9 +144,11 @@ void loop(){
 	// Level 4 - cycle through rainbow colours
 	//
 
+/*
+
 // Setup
 
-  // Valiables level 4
+  // Variables level 4
   
 	String LEDLightsOrder = "";
 	unsigned long delay1 = 0;
@@ -209,6 +211,78 @@ void loop() {
   		}
     }
 }
+
+*/
+
+	// Extra challenge
+
+// Setup
+
+	String LEDLightsOrder = "";
+	unsigned long delay1 = 0;
+
+void setup() { //The Setup function runs once.
+
+  pinMode(RGBRedPin, OUTPUT); //Setup red RGB LED pin as an output pin.
+  pinMode(RGBGreenPin, OUTPUT); //Setup green RGB LED pin as an output pin.
+  pinMode(RGBBluePin, OUTPUT); //Setup blue RGB LED pin as an output pin.
+
+  Serial.begin(9600); //Send data to the Serial monitor.
+  pinMode(rotationPin,INPUT); //Setup rotationPin as an input.
+  
+  Serial.println("Type  the RGB order to blink lights");
+  Serial.println("Choose and type 7 letters and your options are:\n R to Red   ||   G to Green  ||  B to Blue\n C to Cyan  ||  M to Magenta ||  Y to Yellow\n W to White ||");
+  
+} 
+
+
+void loop() {
+  int data = 1023 - analogRead(rotationPin); // Get value of potentiometer
+    if (data == 0){ 
+    	data = 1;  // Way to set fastest visible LED blink
+    } else if (data == 1023){
+    	data =0;	// Way to set LED turned off (not visible) 
+    }
+  
+  char character;
+  
+	if (Serial.available()) {
+		//Read typed characters 
+		character = Serial.read();
+		LEDLightsOrder += character;
+
+    	//Add characters inputed by user
+		
+    	//Type to type and read:
+		delay1 = millis();
+  		}
+  	// Condition to delay time and wait imput from the user(input not empty)
+
+  	if (((millis() - delay1) > 10) && (LEDLightsOrder != "")) {    
+
+		for (int i = 0; i<3; i++){
+			if (LEDLightsOrder[i] == 'r') {
+				redColor(data);
+	    	} else if (LEDLightsOrder[i] == 'g'){
+    	  		greenColor(data);
+      		} else if (LEDLightsOrder[i] == 'b') {
+	      		blueColor(data); 
+    	    }
+      
+				// Printing colors sequence and rotation on terminal
+			if (i==2) {
+          		Serial.print("Colors sequence: ");
+				Serial.println(LEDLightsOrder); 
+          
+          		Serial.print("Rotation value =");
+				Serial.println(data); //Print the data to the serial port.
+
+			}
+  		}
+    }
+}
+
+
 
 
 		// Functions
