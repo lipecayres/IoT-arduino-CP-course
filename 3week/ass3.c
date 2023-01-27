@@ -44,3 +44,51 @@ void loop() { //The loop function runs forever.
 }
 
 */
+
+
+
+
+
+
+
+
+
+
+
+		// Functions
+
+  //Display Red color (255, 0, 0)
+void redColor (float time){
+  analogWrite(RGBRedPin, 255); //Turn on RED
+  delay(time); //Set time delay 
+  analogWrite(RGBRedPin, 0); //Turn off RED
+
+}
+
+  //Display Green color (0, 255, 0)
+void greenColor(float time) {
+  analogWrite(RGBGreenPin, 255); //Turn on GREEN
+  delay(time); //Set time delay 
+  analogWrite(RGBGreenPin, 0); //Turn off GREEN
+}
+  
+  //Display Blue Color (0, 0, 255)
+void blueColor (float time){
+
+  analogWrite(RGBBluePin, 255); //Turn on BLUE
+  delay(time); //Set time delay 
+  analogWrite(RGBBluePin, 0); //Turn off BLUE
+}
+  
+  //Display RGB color (red, green, blue)
+void displayColorLED (int red, int green, int blue){
+   analogWrite(RGBRedPin, red); //Turn on RED
+   analogWrite(RGBGreenPin, green); //Turn on GREEN
+   analogWrite(RGBBluePin, blue); //Turn on BLUE
+}
+  // Turn off LED
+  void turnOffLED () {
+    analogWrite(RGBRedPin, LOW); //Turn off RED
+  	analogWrite(RGBBluePin, LOW); //Turn off BLUE
+  	analogWrite(RGBGreenPin, LOW); //Turn off GREEN
+}
