@@ -211,11 +211,6 @@ void loop() {
 }
 
 
-
-
-
-
-
 		// Functions
 
   //Display Red color (255, 0, 0)
