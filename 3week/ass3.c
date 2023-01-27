@@ -88,7 +88,57 @@ void loop() { //The loop function runs forever.
 
 */
 
+	//
+	// Level 3 - cycle through rainbow colours
+	//
 
+/*
+
+// Setup
+
+void setup() { //The Setup function runs once.
+
+  pinMode(RGBRedPin, OUTPUT); //Setup red RGB LED pin as an output pin.
+  pinMode(RGBGreenPin, OUTPUT); //Setup green RGB LED pin as an output pin.
+  pinMode(RGBBluePin, OUTPUT); //Setup blue RGB LED pin as an output pin.
+
+  Serial.begin(9600); //Send data to the Serial monitor.
+  pinMode(rotationPin,INPUT); //Setup rotationPin as an input.
+  
+} 
+
+
+void loop(){
+  
+  int data = analogRead(rotationPin); 
+  Serial.print("Rotation value =");
+  Serial.println(data); //Print the data to the serial port.
+  
+  	// Conditions to cycle through rainbow colours (ROYGBP)
+  if (data == 0){ 
+    turnOffLED();  // rotationPin turned off
+  }
+  else if (data <= 170){  
+  	displayColorLED (255,0,0); // red (255, 0, 0)
+  } 
+  else if (data <= 340 ){
+  	displayColorLED (255,165,0); // orange (255, 165, 0)
+  } 
+  else if (data <= 510){
+  	displayColorLED (255,255,0); // yellow (255, 255, 0)
+  } 
+  else if (data <= 680){
+  	displayColorLED (0,255,0); // green (0, 255, 0)
+  } 
+  else if (data <= 850){
+  	displayColorLED (0,0,255); // blue (0, 0, 255)
+  } 
+  else if (data <=1023){
+  	displayColorLED (128,0,128); // purple (128, 0, 128)
+  }
+}
+
+*/
 
 
 
