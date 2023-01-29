@@ -147,17 +147,15 @@ void loop(){
 
 */
 
-
 	//
-	// Level 4 - cycle through rainbow colours
+	// Level 4 - input a pattern of colours using R, G or B
 	//
 
+  
 /*
 
 // Setup
 
-  // Variables level 4
-  
 	String LEDLightsOrder = "";
 	unsigned long delay1 = 0;
 
@@ -177,47 +175,38 @@ void setup() { //The Setup function runs once.
 
 
 void loop() {
-  int data = 1023 - analogRead(rotationPin); // Get value of potentiometer
-    if (data == 0){ 
-    	data = 1;  // Way to set fastest visible LED blink
-    } else if (data == 1023){
-    	data =0;	// Way to set LED turned off (not visible) 
-    }
-  
+
+  int data = getInput(); // Getting potentiometer data
+
   char character;
-  
-	if (Serial.available()) {
-		//Read typed characters 
-		character = Serial.read();
-    	//Add characters inputed by user
-		LEDLightsOrder += character;
-    	//Type to type and read:
-		delay1 = millis();
-  		}
-  	// Condition to delay time and wait imput from the user(input not empty)
 
-  	if (((millis() - delay1) > 10) && (LEDLightsOrder != "")) {    
+  if (Serial.available()) {
+    //Read typed characters 
+    character = Serial.read();
+    //Add characters inputed by user
+    LEDLightsOrder += character;
+    LEDLightsOrder.toLowerCase();
+    //Delay to get user entry
+    delay1 = millis();
+  }
 
-		for (int i = 0; i<3; i++){
-			if (LEDLightsOrder[i] == 'r') {
-				redColor(data);
-	    	} else if (LEDLightsOrder[i] == 'g'){
-    	  		greenColor(data);
-      		} else if (LEDLightsOrder[i] == 'b') {
-	      		blueColor(data); 
-    	    }
-      
-				// Printing colors sequence and rotation on terminal
-			if (i==2) {
-          		Serial.print("Colors sequence: ");
-				Serial.println(LEDLightsOrder); 
-          
-          		Serial.print("Rotation value =");
-				Serial.println(data); //Print the data to the serial port.
+  // Condition to delay time and wait imput from the user(input not empty)
 
-			}
-  		}
+  if (((millis() - delay1) > 10) && (LEDLightsOrder != "")) {    
+
+    for (int i=0, n=LEDLightsOrder.length(); i<n; i++){ 
+      // Turn on LED using letters inputed from user
+      displayColorOnScreen(LEDLightsOrder[i]);
     }
+
+    // Printing colors sequence and rotation on terminal
+    Serial.print("Colors sequence: ");
+    Serial.println(LEDLightsOrder); 
+
+    Serial.print("Rotation value =");
+    Serial.println(data); //Print the data to the serial port.
+
+  }
 }
 
 */
