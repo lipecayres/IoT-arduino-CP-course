@@ -48,7 +48,6 @@ void loop() { //The loop function runs forever.
 
 */
 
-
 	//
 	// Level 2 - Color speed controlled by Rotation dial A0
 	//
@@ -74,19 +73,23 @@ void loop() { //The loop function runs forever.
   // Read the value from the light sensor 
   // and store it in the lightData variable.
   // Inverted counter (Start slower and become fast).
-  data = 1023 - analogRead(rotationPin); 
+  data = getInput();
   
   Serial.print("Rotation value =");
   Serial.println(data); //Print the data to the serial port.
   
-  if (data ==0) data = 1; // Faster time visible on LED
-  if (data ==1023) return;  // rotationPin turned off
-  
-  // three colors blinking
-  redColor(data);
-  greenColor(data);
-  blueColor(data);  
-  
+  // Turn on RED LED
+  displayColorLED (255,0,0); // red (255, 0, 0);
+  delay(data);
+
+  // Turn on Green LED
+  displayColorLED (0,255,0); // green (0, 255, 0)
+  delay(data);
+
+  // Turn on Blue LED
+  displayColorLED (0,0,255); // blue (0, 0, 255)
+  delay(data);
+
 }
 
 */
