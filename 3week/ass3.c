@@ -94,6 +94,7 @@ void loop() { //The loop function runs forever.
 
 */
 
+	
 	//
 	// Level 3 - cycle through rainbow colours
 	//
@@ -145,6 +146,7 @@ void loop(){
 }
 
 */
+
 
 	//
 	// Level 4 - cycle through rainbow colours
