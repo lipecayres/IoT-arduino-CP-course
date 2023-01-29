@@ -14,6 +14,9 @@ int RGBRedPin = 9; //The red RGB LED is connected pin 9 of the Arduino.
 int RGBGreenPin = 10; //The green RGB LED is connected pin 10 of the Arduino.
 int RGBBluePin = 11; //The blue RGB LED is connected pin 11 of the Arduino.
 
+	// Level 4 and Extra challenge
+String LEDLightsOrder = "";  // Sequence from the user
+unsigned long delay1 = 0;	   // Delay to input sequence
 	//
 	// Level 1 - Source Code
 	//
@@ -214,6 +217,10 @@ void loop() {
 
 */
 
+
+
+
+
     // Extra challenge specific functions
   
 int getInput() {  
@@ -306,3 +313,6 @@ void displayColorLED (int red, int green, int blue){
   	analogWrite(RGBBluePin, LOW); //Turn off BLUE
   	analogWrite(RGBGreenPin, LOW); //Turn off GREEN
 }
+
+
+
