@@ -278,99 +278,90 @@ void loop() {
 
 
 
+		// Functions 
 
-    // Extra challenge specific functions
-  
-int getInput() {  
-  int data = 1023 - analogRead(rotationPin); // Get value of potentiometer
-    if (data == 0){ 
-    	data = 1;  // Way to set fastest visible LED blink
-    } else if (data == 1023){
-    	data =0;	// Way to set LED turned off (not visible) 
+
+bool validateEntry(String color) {
+  LEDLightsOrder.toLowerCase();
+  for (int i = 0, n=LEDLightsOrder.length(); i<n; i++){
+    if (LEDLightsOrder[i] == 'r' || 
+        LEDLightsOrder[i] == 'g' ||
+        LEDLightsOrder[i] == 'b' ||
+        LEDLightsOrder[i] == 'c' ||
+        LEDLightsOrder[i] == 'w' ||
+        LEDLightsOrder[i] == 'm' ||
+        LEDLightsOrder[i] == 'y' ) {
+      return true;
+    } else {
+      return false;
     }
-  return data;
-}  
+  }}
 
+// Turn On led using KEY LETTER
 void displayColorOnScreen (char color) {
+
   int data = getInput(); // Getting potentiometer data;
 
-  switch(color) { // Selecting colors to display on LED
-    case 'r':
+  switch(color) { // Selecting colors to display 
+    case 'r':  // Red color
       displayColorLED(255,0,0);
-	  delay(data);
-      displayColorLED(0,0,0);
-      break;
-    case 'g':
-      displayColorLED(0,255,0);
-	  delay(data);
-      displayColorLED(0,0,0);
-      break;
-    case 'b':
-	  displayColorLED(0,0,255);
       delay(data);
       displayColorLED(0,0,0);
       break;
-    case 'c':
+    case 'g': // Green color
+      displayColorLED(0,255,0);
+      delay(data);
+      displayColorLED(0,0,0);
+      break;
+    case 'b':  // Blue color
+      displayColorLED(0,0,255);
+      delay(data);
+      displayColorLED(0,0,0);
+      break;
+    case 'c':  // cyan color
       displayColorLED(0,100,100);
       delay(data);
       displayColorLED(0,0,0);
       break;
-    case 'm':
+    case 'm':  // magenta color
       displayColorLED(255,0,255);
       delay(data);
       displayColorLED(0,0,0);
       break;
-    case 'y':
+    case 'y':  // yellow color
       displayColorLED(255,255,0);
       delay(data);
       displayColorLED(0,0,0);
       break;
-    case 'w':
+    case 'w':  // white color
       displayColorLED(255,255,255);
       delay(data);
       displayColorLED(0,0,0);
       break;
+  }}
+
+// Getting input from potentiometer 
+int getInput() {  
+  int data = 1023 - analogRead(rotationPin); // Get value of potentiometer
+  if (data == 0){ 
+    data = 1;  // Way to set fastest visible LED blink
+  } else if (data == 1023){
+    data =0;	// Way to set LED turned off (not visible) 
   }
-}
+  return data;
+}  
+ 
 
-
-		// Functions
-
-  //Display Red color (255, 0, 0)
-void redColor (float time){
-  analogWrite(RGBRedPin, 255); //Turn on RED
-  delay(time); //Set time delay 
-  analogWrite(RGBRedPin, 0); //Turn off RED
-
-}
-
-  //Display Green color (0, 255, 0)
-void greenColor(float time) {
-  analogWrite(RGBGreenPin, 255); //Turn on GREEN
-  delay(time); //Set time delay 
-  analogWrite(RGBGreenPin, 0); //Turn off GREEN
-}
-  
-  //Display Blue Color (0, 0, 255)
-void blueColor (float time){
-
-  analogWrite(RGBBluePin, 255); //Turn on BLUE
-  delay(time); //Set time delay 
-  analogWrite(RGBBluePin, 0); //Turn off BLUE
-}
-  
-  //Display RGB color (red, green, blue)
+// Turn On led using RGB CODE
 void displayColorLED (int red, int green, int blue){
-   analogWrite(RGBRedPin, red); //Turn on RED
-   analogWrite(RGBGreenPin, green); //Turn on GREEN
-   analogWrite(RGBBluePin, blue); //Turn on BLUE
-}
-  // Turn off LED
-  void turnOffLED () {
-    analogWrite(RGBRedPin, LOW); //Turn off RED
-  	analogWrite(RGBBluePin, LOW); //Turn off BLUE
-  	analogWrite(RGBGreenPin, LOW); //Turn off GREEN
+  analogWrite(RGBRedPin, red); //Turn on RED
+  analogWrite(RGBGreenPin, green); //Turn on GREEN
+  analogWrite(RGBBluePin, blue); //Turn on BLUE
 }
 
-
-
+// Turn off LED
+void turnOffLED () {
+  analogWrite(RGBRedPin, LOW); //Turn off RED
+  analogWrite(RGBBluePin, LOW); //Turn off BLUE
+  analogWrite(RGBGreenPin, LOW); //Turn off GREEN
+}
