@@ -226,6 +226,48 @@ int getInput() {
   return data;
 }  
 
+void displayColorOnScreen (char color) {
+  int data = getInput(); // Getting potentiometer data;
+
+  switch(color) { // Selecting colors to display on LED
+    case 'r':
+      displayColorLED(255,0,0);
+	  delay(data);
+      displayColorLED(0,0,0);
+      break;
+    case 'g':
+      displayColorLED(0,255,0);
+	  delay(data);
+      displayColorLED(0,0,0);
+      break;
+    case 'b':
+	  displayColorLED(0,0,255);
+      delay(data);
+      displayColorLED(0,0,0);
+      break;
+    case 'c':
+      displayColorLED(0,100,100);
+      delay(data);
+      displayColorLED(0,0,0);
+      break;
+    case 'm':
+      displayColorLED(255,0,255);
+      delay(data);
+      displayColorLED(0,0,0);
+      break;
+    case 'y':
+      displayColorLED(255,255,0);
+      delay(data);
+      displayColorLED(0,0,0);
+      break;
+    case 'w':
+      displayColorLED(255,255,255);
+      delay(data);
+      displayColorLED(0,0,0);
+      break;
+  }
+}
+
 
 		// Functions
 
