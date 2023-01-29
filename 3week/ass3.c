@@ -17,6 +17,7 @@ int RGBBluePin = 11; //The blue RGB LED is connected pin 11 of the Arduino.
 	// Level 4 and Extra challenge
 String LEDLightsOrder = "";  // Sequence from the user
 unsigned long delay1 = 0;	   // Delay to input sequence
+
 	//
 	// Level 1 - Source Code
 	//
@@ -75,7 +76,7 @@ void loop() { //The loop function runs forever.
   // Inverted counter (Start slower and become fast).
   data = getPotentiometerInput();
   
-  Serial.print("Rotation value =");
+  Serial.print("Time (miliseconds) = ");
   Serial.println(data); //Print the data to the serial port.
   
   // Turn on RED LED
@@ -93,7 +94,6 @@ void loop() { //The loop function runs forever.
 }
 
 */
-
 	
 	//
 	// Level 3 - cycle through rainbow colours
@@ -171,8 +171,9 @@ void setup() { //The Setup function runs once.
 
 
 void loop() {
-
-  int data = getPotentiometerInput(); // Getting potentiometer data
+  
+  // Getting potentiometer data
+  int data = getPotentiometerInput(); 
 
   char character;
 
@@ -199,7 +200,7 @@ void loop() {
     Serial.print("Colors sequence: ");
     Serial.println(LEDLightsOrder); 
 
-    Serial.print("Rotation value =");
+    Serial.print("Time (miliseconds) = ");
     Serial.println(data); //Print the data to the serial port.
 
   }
@@ -234,7 +235,8 @@ void setup() { //The Setup function runs once.
 
 void loop() {
 
-  data = getPotentiometerInput(); // Getting potentiometer data
+  // Getting potentiometer data
+  data = getPotentiometerInput(); 
 
   char character;
 
@@ -265,31 +267,48 @@ void loop() {
         Serial.print("Colors sequence: ");
         Serial.println(LEDLightsOrder); 
 
-        Serial.print("Rotation value =");
+        Serial.print("Time (miliseconds) = ");
         Serial.println(data); //Print the data to the serial port.
+    } else {
+    	Serial.println("Invalid entry, restart");
     }
   }}
 
-*/
 
+*/
 
 		// Functions 
 
+// Validation of text inputed (sequence)
 bool validateEntry(String color) {
   LEDLightsOrder.toLowerCase();
-  for (int i = 0, n=LEDLightsOrder.length(); i<n; i++){
-    if (LEDLightsOrder[i] == 'r' || 
-        LEDLightsOrder[i] == 'g' ||
-        LEDLightsOrder[i] == 'b' ||
-        LEDLightsOrder[i] == 'c' ||
-        LEDLightsOrder[i] == 'w' ||
-        LEDLightsOrder[i] == 'm' ||
-        LEDLightsOrder[i] == 'y' ) {
+
+  int n=LEDLightsOrder.length();  // length of inputed sequence
+  int counterLetter = 0;  // counter to quantity of letters 
+  int counterError = 0;   // counter to quantity of errors
+
+  while (counterLetter <n) {  // loop to iterate full sequence
+    for (int i = 0; i<n; i++){  // iterating sequence
+      if (LEDLightsOrder[i] != 'r' &&  
+          LEDLightsOrder[i] != 'g' &&	// restrictions
+          LEDLightsOrder[i] != 'b' &&	
+          LEDLightsOrder[i] != 'c' &&
+          LEDLightsOrder[i] != 'w' &&
+          LEDLightsOrder[i] != 'm' &&
+          LEDLightsOrder[i] != 'y' ) {
+        counterError++;  // +1 to each error
+      } else {   
+        counterLetter++; // +1 to each iteration letter to letter
+      }
+    }
+
+    if(counterError == 0){ // verifying errors at sequence
       return true;
     } else {
       return false;
     }
-  }}
+  }
+}
 
 // Turn On led using KEY LETTER
 void turnOnLEDByKey (char color) {
