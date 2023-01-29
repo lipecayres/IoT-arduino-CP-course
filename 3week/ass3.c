@@ -73,21 +73,21 @@ void loop() { //The loop function runs forever.
   // Read the value from the light sensor 
   // and store it in the lightData variable.
   // Inverted counter (Start slower and become fast).
-  data = getInput();
+  data = getPotentiometerInput();
   
   Serial.print("Rotation value =");
   Serial.println(data); //Print the data to the serial port.
   
   // Turn on RED LED
-  displayColorLED (255,0,0); // red (255, 0, 0);
+  turnOnLEDByRGB (255,0,0); // red (255, 0, 0);
   delay(data);
 
   // Turn on Green LED
-  displayColorLED (0,255,0); // green (0, 255, 0)
+  turnOnLEDByRGB (0,255,0); // green (0, 255, 0)
   delay(data);
 
   // Turn on Blue LED
-  displayColorLED (0,0,255); // blue (0, 0, 255)
+  turnOnLEDByRGB (0,0,255); // blue (0, 0, 255)
   delay(data);
 
 }
@@ -126,22 +126,22 @@ void loop(){
     turnOffLED();  // rotationPin turned off
   }
   else if (data <= 170){  
-  	displayColorLED (255,0,0); // red (255, 0, 0)
+  	turnOnLEDByRGB (255,0,0); // red (255, 0, 0)
   } 
   else if (data <= 340 ){
-  	displayColorLED (255,165,0); // orange (255, 165, 0)
+  	turnOnLEDByRGB (255,165,0); // orange (255, 165, 0)
   } 
   else if (data <= 510){
-  	displayColorLED (255,255,0); // yellow (255, 255, 0)
+  	turnOnLEDByRGB (255,255,0); // yellow (255, 255, 0)
   } 
   else if (data <= 680){
-  	displayColorLED (0,255,0); // green (0, 255, 0)
+  	turnOnLEDByRGB (0,255,0); // green (0, 255, 0)
   } 
   else if (data <= 850){
-  	displayColorLED (0,0,255); // blue (0, 0, 255)
+  	turnOnLEDByRGB (0,0,255); // blue (0, 0, 255)
   } 
   else if (data <=1023){
-  	displayColorLED (128,0,128); // purple (128, 0, 128)
+  	turnOnLEDByRGB (128,0,128); // purple (128, 0, 128)
   }
 }
 
@@ -154,9 +154,6 @@ void loop(){
 /*
 
 // Setup
-
-	String LEDLightsOrder = "";
-	unsigned long delay1 = 0;
 
 void setup() { //The Setup function runs once.
 
@@ -175,7 +172,7 @@ void setup() { //The Setup function runs once.
 
 void loop() {
 
-  int data = getInput(); // Getting potentiometer data
+  int data = getPotentiometerInput(); // Getting potentiometer data
 
   char character;
 
@@ -195,7 +192,7 @@ void loop() {
 
     for (int i=0, n=LEDLightsOrder.length(); i<n; i++){ 
       // Turn on LED using letters inputed from user
-      displayColorOnScreen(LEDLightsOrder[i]);
+      turnOnLEDByKey(LEDLightsOrder[i]);
     }
 
     // Printing colors sequence and rotation on terminal
@@ -237,7 +234,7 @@ void setup() { //The Setup function runs once.
 
 void loop() {
 
-  data = getInput(); // Getting potentiometer data
+  data = getPotentiometerInput(); // Getting potentiometer data
 
   char character;
 
@@ -261,7 +258,7 @@ void loop() {
       // Reading letter to letter the word interted 
       for (int i = 0, n=LEDLightsOrder.length(); i<n; i++){ 
 		// Turn on LED using letters inputed from user
-        displayColorOnScreen(LEDLightsOrder[i]);
+        turnOnLEDByKey(LEDLightsOrder[i]);
       }
 
       // Printing colors sequence and rotation on terminal
@@ -276,10 +273,7 @@ void loop() {
 */
 
 
-
-
 		// Functions 
-
 
 bool validateEntry(String color) {
   LEDLightsOrder.toLowerCase();
@@ -298,50 +292,50 @@ bool validateEntry(String color) {
   }}
 
 // Turn On led using KEY LETTER
-void displayColorOnScreen (char color) {
+void turnOnLEDByKey (char color) {
 
-  int data = getInput(); // Getting potentiometer data;
+  int data = getPotentiometerInput(); // Getting potentiometer data;
 
   switch(color) { // Selecting colors to display 
     case 'r':  // Red color
-      displayColorLED(255,0,0);
+      turnOnLEDByRGB(255,0,0);
       delay(data);
-      displayColorLED(0,0,0);
+      turnOnLEDByRGB(0,0,0);
       break;
     case 'g': // Green color
-      displayColorLED(0,255,0);
+      turnOnLEDByRGB(0,255,0);
       delay(data);
-      displayColorLED(0,0,0);
+      turnOnLEDByRGB(0,0,0);
       break;
     case 'b':  // Blue color
-      displayColorLED(0,0,255);
+      turnOnLEDByRGB(0,0,255);
       delay(data);
-      displayColorLED(0,0,0);
+      turnOnLEDByRGB(0,0,0);
       break;
     case 'c':  // cyan color
-      displayColorLED(0,100,100);
+      turnOnLEDByRGB(0,100,100);
       delay(data);
-      displayColorLED(0,0,0);
+      turnOnLEDByRGB(0,0,0);
       break;
     case 'm':  // magenta color
-      displayColorLED(255,0,255);
+      turnOnLEDByRGB(255,0,255);
       delay(data);
-      displayColorLED(0,0,0);
+      turnOnLEDByRGB(0,0,0);
       break;
     case 'y':  // yellow color
-      displayColorLED(255,255,0);
+      turnOnLEDByRGB(255,255,0);
       delay(data);
-      displayColorLED(0,0,0);
+      turnOnLEDByRGB(0,0,0);
       break;
     case 'w':  // white color
-      displayColorLED(255,255,255);
+      turnOnLEDByRGB(255,255,255);
       delay(data);
-      displayColorLED(0,0,0);
+      turnOnLEDByRGB(0,0,0);
       break;
   }}
 
 // Getting input from potentiometer 
-int getInput() {  
+int getPotentiometerInput() {  
   int data = 1023 - analogRead(rotationPin); // Get value of potentiometer
   if (data == 0){ 
     data = 1;  // Way to set fastest visible LED blink
@@ -353,7 +347,7 @@ int getInput() {
  
 
 // Turn On led using RGB CODE
-void displayColorLED (int red, int green, int blue){
+void turnOnLEDByRGB (int red, int green, int blue){
   analogWrite(RGBRedPin, red); //Turn on RED
   analogWrite(RGBGreenPin, green); //Turn on GREEN
   analogWrite(RGBBluePin, blue); //Turn on BLUE
