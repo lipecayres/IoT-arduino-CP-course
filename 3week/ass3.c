@@ -150,7 +150,6 @@ void loop(){
 	//
 	// Level 4 - input a pattern of colours using R, G or B
 	//
-
   
 /*
 
@@ -208,6 +207,71 @@ void loop() {
 
   }
 }
+
+*/
+
+	//
+	// Extra challenge - Add other colours to the choices
+	//
+
+/*
+
+// Setup
+
+
+void setup() { //The Setup function runs once.
+
+  pinMode(RGBRedPin, OUTPUT); //Setup red RGB LED pin as an output pin.
+  pinMode(RGBGreenPin, OUTPUT); //Setup green RGB LED pin as an output pin.
+  pinMode(RGBBluePin, OUTPUT); //Setup blue RGB LED pin as an output pin.
+
+  Serial.begin(9600); //Send data to the Serial monitor.
+  pinMode(rotationPin,INPUT); //Setup rotationPin as an input.
+
+  // Message to user: How to use the system
+  Serial.println("Type  the RGB order to blink lights");
+  Serial.println("Choose and type 7 letters and your options are:\n R to Red   ||   G to Green  ||  B to Blue\n C to Cyan  ||  M to Magenta ||  Y to Yellow\n W to White ||");
+
+} 
+
+
+void loop() {
+
+  data = getInput(); // Getting potentiometer data
+
+  char character;
+
+  if (Serial.available()) {
+    //Read typed characters 
+    character = Serial.read();
+
+    //Add characters inputed by user
+    LEDLightsOrder += character;
+
+    //Delay to get user entry
+    delay1 = millis();
+  }
+  
+  // Condition to delay time and wait imput from the user(input not empty)
+  if (((millis() - delay1) > 10) && (LEDLightsOrder != "")) {    
+
+    // Setting colors getted at user entry.
+    if (validateEntry(LEDLightsOrder)){
+      
+      // Reading letter to letter the word interted 
+      for (int i = 0, n=LEDLightsOrder.length(); i<n; i++){ 
+		// Turn on LED using letters inputed from user
+        displayColorOnScreen(LEDLightsOrder[i]);
+      }
+
+      // Printing colors sequence and rotation on terminal
+        Serial.print("Colors sequence: ");
+        Serial.println(LEDLightsOrder); 
+
+        Serial.print("Rotation value =");
+        Serial.println(data); //Print the data to the serial port.
+    }
+  }}
 
 */
 
