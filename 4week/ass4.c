@@ -12,3 +12,19 @@
   int RGBBluePin = 13; //The blue RGB LED is connected pin 13 of the Arduino.
   int RGBYellowPin = 7; //The blue RGB LED is connected pin 7 of the Arduino.
   int binaryNumber;     // Variable to store binary number
+
+  	//
+	// Level 1 - Convert number into a binary number and print at screen 
+	//
+
+
+void setup() { //The Setup function runs once.
+
+  pinMode(RGBRedPin, OUTPUT); //Setup red RGB LED pin as an output pin.
+  pinMode(RGBGreenPin, OUTPUT); //Setup green RGB LED pin as an output pin.
+  pinMode(RGBBluePin, OUTPUT); //Setup blue RGB LED pin as an output pin.
+
+  pinMode(photoResistorPin,INPUT); //Setup rotationPin as an input.
+
+  Serial.begin(9600); //Send data to the Serial monitor.
+}
