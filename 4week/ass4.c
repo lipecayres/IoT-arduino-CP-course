@@ -34,18 +34,16 @@ void setup() { //The Setup function runs once.
 	//
 
 
-void setup() { //The Setup function runs once.
-
+void setup()
+{
+  pinMode(photoresistorInput, INPUT);
   pinMode(RGBRedPin, OUTPUT); //Setup red RGB LED pin as an output pin.
   pinMode(RGBGreenPin, OUTPUT); //Setup green RGB LED pin as an output pin.
   pinMode(RGBBluePin, OUTPUT); //Setup blue RGB LED pin as an output pin.
+  pinMode(RGBYellowPin, OUTPUT); //Setup blue RGB LED pin as an output pin.
 
-  pinMode(photoResistorPin,INPUT); //Setup rotationPin as an input.
-
-  Serial.begin(9600); //Send data to the Serial monitor.
-
-  // Message to user: How to use the system
-//  Serial.println("Enter a number: ");
+  Serial.begin(9600);
+}
 
   int data = 
   int number = 104;
@@ -72,6 +70,5 @@ void setup() { //The Setup function runs once.
   
   Serial.println(binaryReal);
 
-} 
 
 
