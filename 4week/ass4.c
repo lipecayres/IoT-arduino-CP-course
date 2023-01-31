@@ -28,3 +28,50 @@ void setup() { //The Setup function runs once.
 
   Serial.begin(9600); //Send data to the Serial monitor.
 }
+
+	//
+	// Level 1 - Convert number into a binary number and print at screen 
+	//
+
+
+void setup() { //The Setup function runs once.
+
+  pinMode(RGBRedPin, OUTPUT); //Setup red RGB LED pin as an output pin.
+  pinMode(RGBGreenPin, OUTPUT); //Setup green RGB LED pin as an output pin.
+  pinMode(RGBBluePin, OUTPUT); //Setup blue RGB LED pin as an output pin.
+
+  pinMode(photoResistorPin,INPUT); //Setup rotationPin as an input.
+
+  Serial.begin(9600); //Send data to the Serial monitor.
+
+  // Message to user: How to use the system
+//  Serial.println("Enter a number: ");
+
+  int data = 
+  int number = 104;
+  
+  int numberChange = number;
+  int divisionpBy2 = 2;
+  int floorBy2 = 9;
+  String binary = "";
+  String binaryReal = "";
+  
+  while(floorBy2 >0){
+    divisionpBy2 = numberChange %2;
+    floorBy2 = numberChange /2;
+    binary += divisionpBy2;
+    numberChange = floorBy2;
+  }
+
+  int n=binary.length();
+
+
+  for(int i = n-1; i >= 0; i--){
+    binaryReal += binary[i];
+  }  
+  
+  Serial.println(binaryReal);
+
+} 
+
+
