@@ -46,3 +46,10 @@ void turnOnRGBLED () {
   digitalWrite(RGBBluePin, HIGH);
   digitalWrite(RGBGreenPin, HIGH); 
 }
+
+// Turn off reg, green and blue LED
+void turnOffRGBLED () {
+  digitalWrite(RGBRedPin, LOW); 
+  digitalWrite(RGBBluePin, LOW); 
+  digitalWrite(RGBGreenPin, LOW); 
+}
