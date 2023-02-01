@@ -40,6 +40,49 @@ void setup() {
   Serial.begin(9600);
 }
 
+			//
+			// Challenge 1  - Convert into a binary number and display on screen
+			//
+
+
+void loop(){	
+
+  // Converting to binary inverted
+
+  data = analogRead(photoresistorInput);		// Get data from photoresistor
+  Serial.print("Light Sensor: ");   			// Display photoresistor input on screen
+  Serial.println(data);
+
+  // Variables to converting binary number
+
+  int numberToDivide = data;					// Variable created to do not change the value of data when finding the binary number; 
+  int moduleBy2 = numberToDivide;  				// This variable save the module divided by 2
+  int floorBy2 = 1;  							// This variable gets the floor divided by 2 - Starts in 1 to don't break the loop while;
+  String binaryInverted = "";  					// Gets the binary number in a inverted position
+  String binaryReal = "";  						// Binary number at correct order
+
+  // Converting photosensor input to binary inverted
+
+  while(floorBy2 >0){							// Condition to stop division to get binary number
+    moduleBy2 = numberToDivide % 2;  			// Module operation using input from photosensor 
+    floorBy2 = numberToDivide /2;				// Floor operation (truncated) using input from photosensor
+    binaryInverted += moduleBy2;				// Saving module number in a string variable
+    numberToDivide = floorBy2;					// Set new value to data to find binary number (floorBy2)
+  }
+
+  // Getting binary real using binary inverted
+
+  int n=binaryInverted.length();				// Saving the real binary lenght  in a variable
+  for(int i = n-1; i >= 0; i--){				// Setting loop to reverse iteration
+    binaryReal += binaryInverted[i];			// Getting binary real number saving by reverse iteraction on binary inverted
+  }  
+
+  // Display binary on screen
+
+  Serial.print("Binary number: ");				// Print binary number at screen
+  Serial.println(binaryReal);					// Display the binary number on screen
+
+
 
 
 		// Functions
