@@ -33,3 +33,9 @@ void greenLED () {
   digitalWrite(RGBGreenPin, HIGH); 
 }
 
+// Turn on Blue LED
+void blueLED () {
+  digitalWrite(RGBRedPin, LOW); 
+  digitalWrite(RGBBluePin, HIGH); 
+  digitalWrite(RGBGreenPin, LOW); 
+}
