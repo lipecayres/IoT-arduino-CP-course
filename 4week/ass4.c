@@ -15,3 +15,13 @@
   int RGBYellowPin = 7; 						//The blue RGB LED is connected pin 7 of the Arduino.
 
 
+		// Functions
+
+
+  
+// Turn on Red LED
+void redLED () {
+  digitalWrite(RGBRedPin, HIGH); 
+  digitalWrite(RGBBluePin, LOW); 
+  digitalWrite(RGBGreenPin, LOW);
+}
