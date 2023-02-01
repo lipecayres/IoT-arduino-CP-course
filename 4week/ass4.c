@@ -53,3 +53,8 @@ void turnOffRGBLED () {
   digitalWrite(RGBBluePin, LOW); 
   digitalWrite(RGBGreenPin, LOW); 
 }
+
+// Turn on Yellow LED
+void turnOnYellowLED () {
+  digitalWrite(RGBYellowPin, HIGH); 
+}
