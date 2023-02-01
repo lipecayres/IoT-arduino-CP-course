@@ -101,6 +101,25 @@ void loop(){
     turnOnRGBLED();								// Turn on red, green and blue LED
   }
 
+			//
+			// Extra Challenge  - Display the converted binary value using the yellow LED
+			//
+
+  for (int i=0; i<n; i++){
+    if (binaryReal[i] == 49){ 					// Condition to know if the number is equal to 1.
+      digitalWrite(RGBYellowPin, HIGH);			// Turn on Yellow LED
+      delay (1000);								// Wait 1 sec
+    } else if (binaryReal[i] == 48) {			// Condition to know if the numberis equal to 0.						
+      digitalWrite(RGBYellowPin, LOW);			// Turn off Yellow LED
+      delay (1000);								// Wait 1 sec
+    } else {									// If conditions not apply
+    	Serial.println("Error");				// Display error message 
+    }
+  }
+
+  Serial.println("-------------------------");	// Visual effect to improve display visual 
+
+}  
 
 
 
