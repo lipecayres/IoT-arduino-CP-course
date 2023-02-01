@@ -27,10 +27,24 @@
   int RGBYellowPin = 7; 						//The blue RGB LED is connected pin 7 of the Arduino.
 
 
+// Setup
+
+void setup() {
+  
+  pinMode(photoresistorInput, INPUT);
+  pinMode(RGBRedPin, OUTPUT); 					//Setup red RGB LED pin as an output pin.
+  pinMode(RGBGreenPin, OUTPUT); 				//Setup green RGB LED pin as an output pin.
+  pinMode(RGBBluePin, OUTPUT); 					//Setup blue RGB LED pin as an output pin.
+  pinMode(RGBYellowPin, OUTPUT); 				//Setup blue RGB LED pin as an output pin.
+
+  Serial.begin(9600);
+}
+
+
+
 		// Functions
 
-
-  
+ 
 // Turn on Red LED
 void redLED () {
   digitalWrite(RGBRedPin, HIGH); 
