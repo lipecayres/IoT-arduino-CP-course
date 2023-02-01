@@ -4,6 +4,18 @@
 // Description:  Assignment 4 - COMP 1045
 //
 
+// Prototypes
+
+  void redLED (); 								// Turn on Red LED
+  void greenLED();								// Turn on Green LED
+  void blueLED ();								// Turn on Blue LED
+  void allLED (); 								// Turn on all LED
+  void turnOffLED (); 							// Turn off all LED
+  void turnOnYellowLED ();						// Turn on Yellow LED
+  void turnOffYellowLED ();						// Turn off yellow LED
+
+
+
 // Variables
 
   int photoresistorInput = A1;
