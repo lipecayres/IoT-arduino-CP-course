@@ -82,6 +82,25 @@ void loop(){
   Serial.print("Binary number: ");				// Print binary number at screen
   Serial.println(binaryReal);					// Display the binary number on screen
 
+			//
+			// Challenge 2 - Conditions to turn on LED
+			//
+
+  
+  if (data % 2 == 0 && data % 3 != 0){ 			// Condition to only be multiple by 2 
+    turnOffRGBLED();							// Turn off red, green and blue LED before turn on specific LED 
+    greenLED();									// Turn on only green LED
+  }	else if (data % 2 != 0 && data % 3 == 0 ) {	// Condition to only be multiple by 3
+    turnOffRGBLED();							// Turn off red, green and blue LED before turn on specific LED
+    blueLED();									// Turn on only blue LED
+  } else if (data % 2 == 0 && data % 3 == 0){	// Condition to be multiple by 2 and 3 
+    turnOffRGBLED();							// Turn off red, green and blue LED before turn on specific LED
+    redLED();									// Turn on only red LED
+  } else {										// If conditions not apply
+    turnOffRGBLED();							// Turn off all LED before turn on specific LED
+    turnOnRGBLED();								// Turn on red, green and blue LED
+  }
+
 
 
 
