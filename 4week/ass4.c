@@ -106,10 +106,10 @@ void loop(){
 			//
 
   for (int i=0; i<n; i++){
-    if (binaryReal[i] == 49){ 					// Condition to know if the number is equal to 1.
+    if (binaryReal[i] == '1'){ 					// Condition to know if the number is equal to 1.
       digitalWrite(RGBYellowPin, HIGH);			// Turn on Yellow LED
       delay (1000);								// Wait 1 sec
-    } else if (binaryReal[i] == 48) {			// Condition to know if the numberis equal to 0.						
+    } else if (binaryReal[i] == '0') {			// Condition to know if the numberis equal to 0.						
       digitalWrite(RGBYellowPin, LOW);			// Turn off Yellow LED
       delay (1000);								// Wait 1 sec
     } else {									// If conditions not apply
