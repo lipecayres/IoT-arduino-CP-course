@@ -1,6 +1,6 @@
 //
 // Assignment 5 - Level 3 and 4
-// 200548559 - Felipe Simoes Cayres
+// 200548559 - Felipe Simoes Cayres 
 //
 
 // Prototypes
@@ -12,11 +12,11 @@
   void redLedON(); 										// Turn on Red LED
   void greenLedON(); 									// Turn on Green LED
 
-  void clickButton1();  								// Change button 1 state
-  void clickButton2(); 									// Change button 2 state
+  void clickButton1();  								// Toggle button 1 state
+  void clickButton2(); 									// Toggle button 2 state
 
-  void level3ClickButton1(); 							// Change state to true
-  void level3ClickButton2(); 							// Change state to false
+  void level3ClickButton1(); 							// Change button state to true
+  void level3ClickButton2(); 							// Change button state to false
 
 
 // Variables
@@ -35,12 +35,13 @@
   volatile bool state2 = false;  						// Variable to store button2 state
 
   int colors[3][3] = {{255,0,0},{0,255,0},{0, 0 ,255}}; // Array with RGB colors 
+  int colorsSize = sizeof(colors)/sizeof(colors[0]);	//Size of colors array
 
 			//
 			// Level 3  - cycling through three RGB colors
 			//
 
-/*
+
 
 void setup() { 											//The Setup function runs once
 
@@ -53,13 +54,12 @@ void setup() { 											//The Setup function runs once
 }
 
 
-
 void loop() { 											//The loop function runs forever.
 
   while (state){ 										// Loop if true
     int time = 500;  									// Time between colors 
      
-    for(int i = 0; i < sizeof(colors)/sizeof(colors[0]); i++){  // Searching color codes index to set in a fu
+    for(int i = 0; i < colorsSize; i++){  				// Searching color codes index to set in a fu
        
       if (state) { 										//Check to see if button1 stage changed
       
@@ -75,12 +75,12 @@ void loop() { 											//The loop function runs forever.
   
 }
 
-*/
+
 			//
 			// Level 4  - Green and Red LED to the circuit with RGB LED
 			//
 
-
+/*
 
 void setup() { 											//The Setup function runs once
 
@@ -117,7 +117,7 @@ void loop() { 											//The loop function runs forever.
   }
 }
 
-
+*/
 
 
 	// Functions
@@ -148,9 +148,7 @@ void redLedON() {
 // Turn On ciclying colors on RGB LED
 void ciclyngRGBColors(int time) {
   
-  int colorSize = sizeof(colors)/sizeof(colors[0]);		//Size of colors array
-
-  for(int i = 0; i < colorSize; i++){  					// Searching color codes index to set in a fu
+  for(int i = 0; i < colorsSize; i++){  					// Searching color codes index to set in a fu
     if (state && state2) { 								//Check to see if button1 stage changed
 
       turnOnLEDByRGB (colors[i][0], colors[i][1],colors[i][2]); 	//Turn on Led
