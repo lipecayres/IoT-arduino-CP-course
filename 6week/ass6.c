@@ -42,7 +42,24 @@ void checkLengthName(String str1 , String str2) {
   return length;
 }  
   
-
+  
+  String name = "Felipe";
+  String lastName = "Cayres";
+  int lengthToAdd = 0;
+  
+  int nameSize = sizeof(name);
+  int lastNameSize = sizeof(lastName);
+  
+  if(nameSize >= lastNameSize){
+    lengthToAdd = nameSize;;
+  } else {
+  	lengthToAdd = lastNameSize;
+  }
+  
+  for (int i = 0; i < lengthToAdd; i++){
+  	name += " ";
+    lastName += " ";
+  }
    
   for (int i = 0; i <= 16 - lengthToAdd; i++){
     lcd.clear();
