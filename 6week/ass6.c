@@ -18,7 +18,22 @@
   volatile int state2 = 0;   							// Variable to store button2 state
 
   String display[3] = {"Felipe","Crossfit","Salad"};
-  int displaySize[3] = {6,8,5};
+
+
+		// Level 4
+  String questions[5] {"Do you have any pets?",
+                       "Do you talk in your sleep?",
+                       "Do you like your job?",
+                       "Do you play sports?",
+                       "Do you drink coffee?"
+                      };
+
+  int answers[5] = {9,9,9,9,9};
+  int yesOrNo[2];
+  int iteration;
+  int resetButton;
+
+
 			//
 			// Level 2  - Shift your name back and forth across the LCD
 			//
@@ -68,58 +83,30 @@ void setup() {
 
 void loop(){
   
-  String displayWord = display[state];
-  int displayWordSize = displaySize[state];
-  
-  Serial.println("State: " + state);
-  Serial.println("Display Word: " + displayWord);  
-  Serial.println("Display Size: " + (String)displayWordSize);
-  Serial.println("---------------");
-  
-  
-  for (int i = 0; i <= 16 - displayWordSize; i++){
-      displayWord = display[state];
-	  displayWordSize = displaySize[state];
+  for (int i = 0; i <= 16 - display[state].length(); i++){
     
       lcd.clear();
       lcd.setCursor(i,0); //goto first column and first line (0,0)
-      lcd.print(displayWord); //Print at cursor Location   
+      lcd.print(display[state]); //Print at cursor Location   
       delay(500);    
     
    }
   
-  for (int i = 16-displayWordSize; i >= 0; i--){
-    displayWord = display[state];
-	displayWordSize = displaySize[state];
+  for (int i = 16-display[state].length(); i >= 0; i--){
     
     lcd.clear();
     lcd.setCursor(i,1); //goto first column and second line
-    lcd.print(displayWord); //Print at cursor Location
+    lcd.print(display[state]); //Print at cursor Location
     delay(500);
    }  
 }
 
-
 */
-
 
 			//
 			// Level 4  - Short Survey with yes/no question buttons
 			//
 
-// Variables
-
-  String questions[5] {"Do you have any pets?",
-                       "Do you talk in your sleep?",
-                       "Do you like your job?",
-                       "Do you play sports?",
-                       "Do you drink coffee?"
-                      };
-
-  int answers[5] = {9,9,9,9,9};
-  int yesOrNo[2] = {0,0};
-  int iteration = 0;
-  int resetButton = 0;
 
 
 void setup() {
@@ -134,17 +121,24 @@ void setup() {
 
 void loop(){
   
-  resetButton =0;
   
-  for (int i =0; i < 5; i++){
+  resetButton =0;				
+  
+	  // Display questions stored in an array
+  for (int i =0; i < 5; i++){		
     iteration = i;
     
     while (answers[i] == 9){
  	 	displayQuestion(questions[i]);
     }
   }
+
+  	// Getting answers 
   
   totalAnswers();
+  
+  
+    // Display yes/no quantity - restart message 
   
   resetButton =0;
   iteration = 0;
@@ -154,22 +148,24 @@ void loop(){
     if (answers[4] != 9) {
       
       lcd.clear();
-      lcd.setCursor(0,0); //goto first column and first line (0,0)
-      lcd.print("Answer's Summary"); //Print at cursor Location 
-      lcd.setCursor(0,1); //goto first column and first line (0,0)
+      lcd.setCursor(0,0); 
+      lcd.print("Answer's Summary"); 
+      lcd.setCursor(0,1); 					
       lcd.print("Yes: " + (String)yesOrNo[0] + " | " + "No: " + (String)yesOrNo[1]); //Print at cursor Location 
       delay(2000);
 
       lcd.clear();
-      lcd.setCursor(0,0); //goto first column and first line (0,0)
-      lcd.print("Want to restart?"); //Print at cursor Location 
-      lcd.setCursor(0,1); //goto first column and first line (0,0)
-      lcd.print("Press 3x Yes btn "); //Print at cursor Location 
+      lcd.setCursor(0,0); 					//goto first column and first line (0,0)
+      lcd.print("Want to restart?"); 		//Print at cursor Location 
+      lcd.setCursor(0,1); 					//goto first column and first line (0,0)
+      lcd.print("Press 3x Yes btn "); 		//Print at cursor Location 
       delay(2000);
 
     }
   }
 
+      // Restart function 
+  
   if (resetButton == 3){
     for (int i = 0; i<sizeof(answers); i++){
       answers[i] = 9;
@@ -182,41 +178,32 @@ void loop(){
     iteration = 0;
     
     lcd.clear();
-    lcd.setCursor(0,0); //goto first column and first line (0,0)
-    lcd.print("Restarting"); //Print at cursor Location 
-    lcd.setCursor(0,1); //goto first column and first line (0,0)
-    lcd.print("Please wait... "); //Print at cursor Location 
+    lcd.setCursor(0,0); 			//goto first column and first line (0,0)
+    lcd.print("Restarting"); 		//Print at cursor Location 
+    lcd.setCursor(0,1); 			//goto first column and first line (0,0)
+    lcd.print("Please wait... "); 	//Print at cursor Location 
     delay(2000);
 
   }
 }
 
+
+
 	// Functions
 
-int checkLengthName(String str1 , String str2) {
 
-  int length;
-  
-  if(sizeof(str1) >= sizeof(str2)){
-    length = sizeof(str1);
-  } else {
-  	length = sizeof(str2);
-  }  
-  
-  return length;
-}  
 
 
 // Change button 1 state
 void clickButton1() {
-  state += 1;								// Change state between 1 to 3
+  state += 1;								// Change button state
 
   if (state >2){
     state = 0;
   }
 }
 
-
+// Display question on screen
 void displayQuestion(String question) {
   String displayUp;
   String displayDown;
@@ -239,6 +226,7 @@ void displayQuestion(String question) {
   delay(500); 
 }
 
+// Get total answers (yes/no)
 void totalAnswers(){
   for (int i=0; i<5;i++){
     if (answers[i] == 1){
