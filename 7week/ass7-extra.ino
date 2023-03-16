@@ -1,5 +1,5 @@
 //
-// Assignment 7
+// Assignment 7 - extra
 // 200548559 - Felipe Simoes Cayres
 //
 
@@ -206,8 +206,8 @@ int melody[5][60] =
     double melodyTimes[5] = {0,0,0,0,0};
     int yesOrNoAnswers[2] = {0,0};
 
-		// Time variables
-	double startTimeSong, endTimeSong;
+	// Time measure variables
+	double startTime, endTime, idleTime, totalTime;
 
 		// Game choices
 
@@ -221,14 +221,11 @@ int melody[5][60] =
   	int playThisSong = 0;  //review
 
     // Stop btn at songs
-	int stop0,stop1,stop2,stop3,stop4;
+	int stop0;
 
-int buttonState = 0;     // current state of the button
-int lastButtonState = 0; // previous state of the button
-int startPressed = 0;    // the moment the button was pressed
-int endPressed = 0;      // the moment the button was released
-int holdTime = 0;        // how long the button was hold
-int idleTime = 0;        // how long the button was idle
+    String textToDisplay;
+    int index = 0;
+ 	String str1, str2;
 
 // Setup
 
@@ -246,61 +243,26 @@ void setup() {
              
 
 void loop () {
-
-  int time1 = millis();
-  Serial.println(time1);
-  delay(2000);
-    Serial.println(time1);
-  delay(2000);
-  int time2 = millis();
-  Serial.println(time1);
-      Serial.println(time2);
-  delay(2000);
-      Serial.println(time1);
-    Serial.println(time2);
-  delay(2000);
   
-  /*
-  	intro();
+ // 	intro();
+  
+//	playGame();
+ 
+//	showScore();
     
-  displayText("    Song 1             3");
-  delay(500);
-  displayText("    Song 1             2");
-  delay(500);
-  displayText("    Song 1             1");  
-  
-  stop0=0;
-  
-  while(stop0 ==0){
-    displayText("   Playing...    STOP btn to go!"); 
-    playSong(0);
-  }  
+ //   restartGame();
 
-  */
 
+  
 }
-
- // playSong(3);
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 
 
 // ---------------------------------------------------
-
-
-
+// ---------------------------------------------------
+// ---------------------------------------------------
 
 
 
@@ -311,16 +273,22 @@ void loop () {
             //
 
 void intro() {
-    displayText(">>> Welcome <<<");
-    delay(2000);
+    displayText(">>> Welcome <<<       .         ");
+    delay(200);
+    displayText(">>> Welcome <<<       ..        ");
+    delay(200);
+    displayText(">>> Welcome <<<       ...       ");
+    delay(200);
+    displayText(">>> Welcome <<<       ....      ");
+    delay(200);
   
   
   while (beginGameChoise ==0){
-    displayText("    This is     What's the song?");
-    delay(1000);
+    displayText("    This is:    What's the song?");
+    delay(2000);
     if(beginGameChoise !=0) break;
     displayText("   Click next   button to begin");
-    delay(1000);
+    delay(2000);
   }
   
   instructionsChoise = 0;
@@ -338,6 +306,116 @@ void intro() {
     delay(1000);
   }
 }
+
+
+// Display message before start new song
+void beforeSong(){  
+  displayText("  Next song...         3");
+  delay(500);
+  displayText("  Next song...         2");
+  delay(500);
+  displayText("  Next song...         1");  
+}
+
+
+// Start game
+void playGame(){
+  for (int i = 0; i<5;i++){
+
+    beforeSong();
+
+    stop0=0;
+    while(stop0 ==0){
+      displayText("   Playing...    STOP btn to go!"); 
+      startTime = millis();
+      playSong(i);
+    }
+
+    String textToDisplay = "Clock stopped!  Time:";
+    String str1 = String(idleTime, 2); 
+    Serial.println(str1);
+
+    for (int i=0; i<5;i++){
+      textToDisplay += str1[i];  
+    }
+    textToDisplay += "s"; 
+
+    displayText(textToDisplay); 
+    delay(2000);	
+
+  }
+}
+
+
+// Show final score to user
+
+void showScore() {
+  String textToDisplay = "   Total time:       ";
+  String str1 = String(totalTime,2); 
+
+  
+  
+  String str2 = "";
+  index = 0;
+  
+  if(totalTime <10){
+    textToDisplay += " ";
+    for (int i=0;i<4;i++){
+      str2 += str1;
+  	  index = 4;    
+    } 
+  } else {
+    str2 = str1;
+    index = 5;
+  }
+
+  
+  for (int i=0; i<index;i++){
+	textToDisplay += str2[i];  
+  }
+  textToDisplay += "s";
+  
+  displayText("    END GAME");
+  delay(500);
+  
+  stop0=0;
+  while (stop0 !=3){
+    
+    if (stop0 !=3){
+    displayText(textToDisplay); 
+  	delay(1000);    
+    }
+    
+    if (stop0 !=3){
+    displayText("    Restart?      Press STOP 3x"); 
+  	delay(1000);
+    }  
+}
+
+}
+
+// Restart game function
+void restartGame () {  
+
+    displayText("   Restarting         ."); 
+    delay(100);
+    displayText("   Restarting         .."); 
+    delay(100);
+    displayText("   Restarting         ..."); 
+    delay(100);
+    displayText("   Restarting         ...."); 
+    delay(100);
+  
+  stop0 = 0;
+  beginGameChoise =0;
+  instructionsChoise = 0;
+  playThisSong = 0; 
+  textToDisplay = "";
+  index = 0;
+  str1 = str2 = "";
+  
+}
+
 
 void runMenu() 
 {  
@@ -383,16 +461,16 @@ void displayText(String text) {
 
 void playSong(int songCode){
 
-  int time = 170;
+  int time = 150;
   // sizeof gives the number of bytes, each int value is composed of two bytes (16 bits)
   // there are two values per note (pitch and duration), so for each note there are four bytes
-  
+
   int notes = sizeof(melody[songCode]) / sizeof(melody[songCode][0]) / 2;
 
-// this calculates the duration of a whole note in ms
-int wholenote = (60000 * 4) / time;
+  // this calculates the duration of a whole note in ms
+  int wholenote = (60000 * 4) / time;
 
-int divider = 0, noteDuration = 0;
+  int divider = 0, noteDuration = 0;
 
   // iterate over the notes of the melody.
   // Remember, the array is twice the number of notes (notes + durations)
@@ -411,18 +489,21 @@ int divider = 0, noteDuration = 0;
 
     // we only play the note for 90% of the duration, leaving 10% as a pause
     tone(buzzerPin, melody[songCode][thisNote], noteDuration * 0.9);
-    if(thisNote<0){
-	    ledsShow(thisNote *(-1));
-    } else {
-    	ledsShow(thisNote);
-    }
     // Wait for the specief duration before playing the next note.
     delay(noteDuration);
 
     // stop the waveform generation before the next note.
     noTone(buzzerPin);
+
+    if(stop0 != 0) {
+      endTime = millis();
+      idleTime = (endTime - startTime)/1000;
+      thisNote = (notes * 2)-2;
+      totalTime += idleTime;
+    }
   }
 }
+
 
 // LED's show while songs are on
 void ledsShow(double note) {
@@ -474,10 +555,6 @@ void clickButton1 () {
 // Change button 2 (STOP)
 void clickButton2 () {
   stop0++;
-  stop1++;
-  stop2++;
-  stop3++;
-  stop4++;
   
 }
 
