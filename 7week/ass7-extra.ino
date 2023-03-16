@@ -6,6 +6,7 @@
 // Packages
 #include <LiquidCrystal.h>
 
+
 //*************************************************
 //* Public Constants
 //*************************************************/
@@ -121,46 +122,6 @@
 
 // Variables
 
-	//Array with songs
-  int melody[3][24] {
-{
-  NOTE_D3, NOTE_B3, NOTE_A3, NOTE_G3, NOTE_D3,
-  NOTE_D3, NOTE_D3, NOTE_D3, NOTE_B3, NOTE_A3, NOTE_G3, NOTE_E3, 0,
-  NOTE_E3, NOTE_C4, NOTE_B3, NOTE_A3, NOTE_FS3, 0 ,
-  NOTE_D4, NOTE_D4, NOTE_C4, NOTE_A3, NOTE_B3
-},
-{
-  REST, NOTE_D4, NOTE_G4, NOTE_AS4, NOTE_A4,
-  NOTE_G4, NOTE_D5, NOTE_C5, NOTE_A4,
-  NOTE_G4, NOTE_AS4, NOTE_A4,
-  NOTE_F4, NOTE_GS4, NOTE_D4,NOTE_D4,
-  NOTE_G4, NOTE_AS4, NOTE_A4,
-  NOTE_G4, NOTE_D5,
-  NOTE_F5, NOTE_E5,
-  NOTE_DS5
-},
-{
-
-  NOTE_C4, NOTE_C4, NOTE_D4, NOTE_C4, NOTE_F4, NOTE_E4, 
-  NOTE_C4, NOTE_C4, NOTE_D4, NOTE_C4, NOTE_G4, NOTE_F4, 
-  NOTE_C4, NOTE_C4, NOTE_C5, NOTE_A4, NOTE_F4, NOTE_E4, 
-  NOTE_D4, NOTE_AS4, NOTE_AS4, NOTE_A4, NOTE_F4, NOTE_G4
-}};
-
-
-	//Array with note durations
-  int noteDurations[3][24] 
-{
-  {4, 4, 4, 4, 2.5, 8, 8, 4, 4, 4, 4, 2.5, 
-    2, 4, 4, 4, 4, 2.5, 2, 4, 4, 4, 4, 1
-  },
-  {2, 4, 4, 8, 4, 2, 4, 2, 2, 4, 8, 4, 
-    2, 4, 1, 4, 4, 8, 4,2, 4, 2, 4, 2
-  },
-  {4,8,4,4,4,2,4,8,4,4,4,2,
-    4,8,4,4,4,4,4,4,8,4,4,2
-  }
-};
 
 	// Array with ROYGBP colors
   int colors[6][3] = {
@@ -175,9 +136,99 @@
 	//Size of colors array
   int colorsSize = sizeof(colors)/sizeof(colors[0]);
 
-	// Song to play
-  int playThisSong = 9;
 
+	// Array of songs
+
+int melody[5][60] = 
+{
+  {
+
+    // We Wish You a Merry Christmas
+    // Score available at https://musescore.com/user/6208766/scores/1497501
+
+    NOTE_C5,4, NOTE_F5,4, NOTE_F5,8, NOTE_G5,8, NOTE_F5,8, NOTE_E5,8,
+    NOTE_D5,4, NOTE_D5,4, NOTE_D5,4, NOTE_G5,4, NOTE_G5,8, NOTE_A5,8, 
+    NOTE_G5,8, NOTE_F5,8, NOTE_E5,4, NOTE_C5,4, NOTE_C5,4, NOTE_A5,4, 
+    NOTE_A5,8, NOTE_AS5,8, NOTE_A5,8, NOTE_G5,8,NOTE_F5,4, NOTE_D5,4, 
+    NOTE_C5,8, NOTE_C5,8, NOTE_D5,4, NOTE_G5,4, NOTE_E5,4, NOTE_F5,2
+  },
+  {
+
+    // Super Mario Bros theme
+    // Score available at https://musescore.com/user/2123/scores/2145
+    // Theme by Koji Kondo
+
+
+    NOTE_E5,8, NOTE_E5,8, REST,8, NOTE_E5,8, REST,8, NOTE_C5,8, 
+    NOTE_E5,8, NOTE_G5,4, REST,4, NOTE_G4,8, REST,4, NOTE_C5,-4, 
+    NOTE_G4,8, REST,4, NOTE_E4,-4,NOTE_A4,4, NOTE_B4,4, NOTE_AS4,8, 
+    NOTE_A4,4, NOTE_G4,-8, NOTE_E5,-8, NOTE_G5,-8, NOTE_A5,4, NOTE_F5,8, 
+    NOTE_G5,8, REST,8, NOTE_E5,4,NOTE_C5,8, NOTE_D5,8, NOTE_B4,-4
+  },
+  {
+
+  // Happy Birthday
+  // Score available at https://musescore.com/user/8221/scores/26906
+
+  NOTE_C4,4, NOTE_C4,8, NOTE_D4,-4, NOTE_C4,-4, NOTE_F4,-4, NOTE_E4,-2, 
+  NOTE_C4,4, NOTE_C4,8, NOTE_D4,-4, NOTE_C4,-4, NOTE_G4,-4, NOTE_F4,-2, 
+  NOTE_C4,4, NOTE_C4,8, NOTE_C5,-4, NOTE_A4,-4, NOTE_F4,-4, NOTE_E4,-4, 
+  NOTE_D4,-4, NOTE_AS4,4, NOTE_AS4,8, NOTE_A4,-4, NOTE_F4,-4, NOTE_G4,-4,
+  NOTE_F4,-2, NOTE_C4,4, NOTE_C4,8, NOTE_D4,-4, NOTE_C4,-4, NOTE_F4,-4
+ 
+  },
+  {
+     // Hedwig's theme fromn the Harry Potter Movies
+    // Socre from https://musescore.com/user/3811306/scores/4906610
+
+    REST, 2, NOTE_D4, 4, NOTE_G4, -4, NOTE_AS4, 8, NOTE_A4, 4,NOTE_G4, 2, 
+    NOTE_D5, 4,NOTE_C5, -2, NOTE_A4, -2,NOTE_G4, -4, NOTE_AS4, 8, NOTE_A4, 4,
+    NOTE_F4, 2, NOTE_GS4, 4, NOTE_D4, -1, NOTE_D4, 4, NOTE_G4, -4, NOTE_AS4, 8, 
+    NOTE_A4, 4, NOTE_G4, 2, NOTE_D5, 4, NOTE_F5, 2, NOTE_E5, 4, NOTE_DS5, 2, 
+    NOTE_B4, 4, NOTE_DS5, -4, NOTE_D5, 8, NOTE_CS5, 4, NOTE_CS4, 2, NOTE_B4, 4
+  },
+  {
+  
+    // Dart Vader theme (Imperial March) - Star wars 
+    // Score available at https://musescore.com/user/202909/scores/1141521
+    // The tenor saxophone part was used
+
+    NOTE_AS4,8, NOTE_AS4,8, NOTE_AS4,8, NOTE_F5,2, NOTE_C6,2, NOTE_AS5,8, 
+    NOTE_A5,8, NOTE_G5,8, NOTE_F6,2, NOTE_C6,4, NOTE_AS5,8, NOTE_A5,8, 
+    NOTE_G5,8, NOTE_F6,2, NOTE_C6,4, NOTE_AS5,8, NOTE_A5,8, NOTE_AS5,8, 
+    NOTE_G5,2, NOTE_C5,8, NOTE_C5,8, NOTE_C5,8, NOTE_F5,2, NOTE_C6,2,
+    NOTE_AS5,8, NOTE_A5,8, NOTE_G5,8, NOTE_F6,2, NOTE_C6,4, NOTE_AS5,8
+  }
+};
+
+		// Answers
+	String melodyNames[5] = {"Merry Christmas","Mario Bros theme", "Happy Birthday","Hedwig's theme","Dart Vader theme"};
+    double melodyTimes[5] = {0,0,0,0,0};
+    int yesOrNoAnswers[2] = {0,0};
+
+		// Time variables
+	double startTimeSong, endTimeSong;
+
+		// Game choices
+
+	//Begin game
+	int beginGameChoise =0;
+
+	// Instructions
+	int instructionsChoise = 0;
+
+	// Song to play choosed by user
+  	int playThisSong = 0;  //review
+
+    // Stop btn at songs
+	int stop0,stop1,stop2,stop3,stop4;
+
+int buttonState = 0;     // current state of the button
+int lastButtonState = 0; // previous state of the button
+int startPressed = 0;    // the moment the button was pressed
+int endPressed = 0;      // the moment the button was released
+int holdTime = 0;        // how long the button was hold
+int idleTime = 0;        // how long the button was idle
 
 // Setup
 
@@ -186,24 +237,107 @@ void setup() {
   lcd.begin (16,2); //Initialize the LCD.
   
   pinMode(buzzerPin, OUTPUT);		 	//Setup buzzer pin as an output pin.
+  pinMode(button2Pin, INPUT); // initialize the button pin as a input
   
   attachInterrupt(digitalPinToInterrupt(button1Pin), clickButton1, RISING); 	//Setup button1 pin as an input pin.
   attachInterrupt(digitalPinToInterrupt(button2Pin), clickButton2, RISING); 	//Setup button2 pin as an input pin.
 
 }
-
+             
 
 void loop () {
-    displayText("Welcome");
-	runMenu();
+
+  int time1 = millis();
+  Serial.println(time1);
+  delay(2000);
+    Serial.println(time1);
+  delay(2000);
+  int time2 = millis();
+  Serial.println(time1);
+      Serial.println(time2);
+  delay(2000);
+      Serial.println(time1);
+    Serial.println(time2);
+  delay(2000);
+  
+  /*
+  	intro();
+    
+  displayText("    Song 1             3");
+  delay(500);
+  displayText("    Song 1             2");
+  delay(500);
+  displayText("    Song 1             1");  
+  
+  stop0=0;
+  
+  while(stop0 ==0){
+    displayText("   Playing...    STOP btn to go!"); 
+    playSong(0);
+  }  
+
+  */
 
 }
+
+ // playSong(3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ---------------------------------------------------
+
+
+
+
+
+
 
 
             //
             //  Functions
             //
 
+void intro() {
+    displayText(">>> Welcome <<<");
+    delay(2000);
+  
+  
+  while (beginGameChoise ==0){
+    displayText("    This is     What's the song?");
+    delay(1000);
+    if(beginGameChoise !=0) break;
+    displayText("   Click next   button to begin");
+    delay(1000);
+  }
+  
+  instructionsChoise = 0;
+  displayText("> Instructions <");
+  delay(2000);
+  
+  while (instructionsChoise ==0){
+    displayText("Pay attention to    the song");
+    delay(1000);
+    if(instructionsChoise !=0) break;
+    displayText("   Press STOP    to pause clock");
+    delay(1000);
+    if(instructionsChoise !=0) break;
+    displayText("     Ready?      Next to START!");
+    delay(1000);
+  }
+}
 
 void runMenu() 
 {  
@@ -214,26 +348,7 @@ void runMenu()
     Serial.println("2- Song2 - Harry Potter");
     Serial.println("3- Song3 - Happy Birthday");
     Serial.println("-------");
-    
-  while (playThisSong == 9){
 
-    if (Serial.available()) {
-      //Read typed characters 
-      int pickSong = Serial.read();
-      
-      if (pickSong == '1'){
-      	playThisSong = 0;
-      } else if (pickSong == '2'){
-        playThisSong = 1;
-      }else if (pickSong == '3'){
-        playThisSong = 2;
-      } else {
-        pickSong = Serial.read();
-      }
-    }
-  }
-  
-	playSong(playThisSong);
 
 }
 		// LCD 
@@ -267,20 +382,47 @@ void displayText(String text) {
 // Play song
 
 void playSong(int songCode){
-  for (int i = 0; i<sizeof(melody[songCode])/2; i++){
-    ledsShow(noteDurations[songCode][i]);
-    tone(buzzerPin, melody[songCode][i],noteDurations[songCode][i]*1000);
 
-    delay(200);
-    turnOffRGBLED ();
-    delay(100);
+  int time = 170;
+  // sizeof gives the number of bytes, each int value is composed of two bytes (16 bits)
+  // there are two values per note (pitch and duration), so for each note there are four bytes
+  
+  int notes = sizeof(melody[songCode]) / sizeof(melody[songCode][0]) / 2;
+
+// this calculates the duration of a whole note in ms
+int wholenote = (60000 * 4) / time;
+
+int divider = 0, noteDuration = 0;
+
+  // iterate over the notes of the melody.
+  // Remember, the array is twice the number of notes (notes + durations)
+  for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
+
+    // calculates the duration of each note
+    divider = melody[songCode][thisNote + 1];
+    if (divider > 0) {
+      // regular note, just proceed
+      noteDuration = (wholenote) / divider;
+    } else if (divider < 0) {
+      // dotted notes are represented with negative durations!!
+      noteDuration = (wholenote) / abs(divider);
+      noteDuration *= 1.5; // increases the duration in half for dotted notes
+    }
+
+    // we only play the note for 90% of the duration, leaving 10% as a pause
+    tone(buzzerPin, melody[songCode][thisNote], noteDuration * 0.9);
+    if(thisNote<0){
+	    ledsShow(thisNote *(-1));
+    } else {
+    	ledsShow(thisNote);
+    }
+    // Wait for the specief duration before playing the next note.
+    delay(noteDuration);
+
+    // stop the waveform generation before the next note.
+    noTone(buzzerPin);
   }
-
-  ledsShow(noteDurations[songCode][23]);
-  delay(noteDurations[songCode][23] *1000);
-  turnOffRGBLED ();
 }
-
 
 // LED's show while songs are on
 void ledsShow(double note) {
@@ -323,12 +465,19 @@ void turnOffRGBLED () {
 
 	// Buttons
 
-// Change button 1 
+// Change button 1 (Next)
 void clickButton1 () {
+  beginGameChoise++;
+  instructionsChoise++;
+}
+
+// Change button 2 (STOP)
+void clickButton2 () {
+  stop0++;
+  stop1++;
+  stop2++;
+  stop3++;
+  stop4++;
   
 }
 
-// Change button 2 
-void clickButton2 () {
-  
-}
