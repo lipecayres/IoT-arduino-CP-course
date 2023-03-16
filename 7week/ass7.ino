@@ -109,43 +109,38 @@
 
 // Variables
 
-  int melody[3][24] {
+	//Array with songs
+int melody[3][60] = 
 {
-  NOTE_D3, NOTE_B3, NOTE_A3, NOTE_G3, NOTE_D3,
-  NOTE_D3, NOTE_D3, NOTE_D3, NOTE_B3, NOTE_A3, NOTE_G3, NOTE_E3, 0,
-  NOTE_E3, NOTE_C4, NOTE_B3, NOTE_A3, NOTE_FS3, 0 ,
-  NOTE_D4, NOTE_D4, NOTE_C4, NOTE_A3, NOTE_B3
-},
-{
-  REST, NOTE_D4, NOTE_G4, NOTE_AS4, NOTE_A4,
-  NOTE_G4, NOTE_D5, NOTE_C5, NOTE_A4,
-  NOTE_G4, NOTE_AS4, NOTE_A4,
-  NOTE_F4, NOTE_GS4, NOTE_D4,NOTE_D4,
-  NOTE_G4, NOTE_AS4, NOTE_A4,
-  NOTE_G4, NOTE_D5,
-  NOTE_F5, NOTE_E5,
-  NOTE_DS5
-},
-{
+  {
 
-  NOTE_C4, NOTE_C4, NOTE_D4, NOTE_C4, NOTE_F4, NOTE_E4, 
-  NOTE_C4, NOTE_C4, NOTE_D4, NOTE_C4, NOTE_G4, NOTE_F4, 
-  NOTE_C4, NOTE_C4, NOTE_C5, NOTE_A4, NOTE_F4, NOTE_E4, 
-  NOTE_D4, NOTE_AS4, NOTE_AS4, NOTE_A4, NOTE_F4, NOTE_G4
-}};
+    // We Wish You a Merry Christmas
 
-
-
-  int noteDurations[3][24] 
-{
-  {4, 4, 4, 4, 2.5, 8, 8, 4, 4, 4, 4, 2.5, 
-    2, 4, 4, 4, 4, 2.5, 2, 4, 4, 4, 4, 1
+    NOTE_C5,4, NOTE_F5,4, NOTE_F5,8, NOTE_G5,8, NOTE_F5,8, NOTE_E5,8,
+    NOTE_D5,4, NOTE_D5,4, NOTE_D5,4, NOTE_G5,4, NOTE_G5,8, NOTE_A5,8, 
+    NOTE_G5,8, NOTE_F5,8, NOTE_E5,4, NOTE_C5,4, NOTE_C5,4, NOTE_A5,4, 
+    NOTE_A5,8, NOTE_AS5,8, NOTE_A5,8, NOTE_G5,8,NOTE_F5,4, NOTE_D5,4, 
+    NOTE_C5,8, NOTE_C5,8, NOTE_D5,4, NOTE_G5,4, NOTE_E5,4, NOTE_F5,2
   },
-  {2, 4, 4, 8, 4, 2, 4, 2, 2, 4, 8, 4, 
-    2, 4, 1, 4, 4, 8, 4,2, 4, 2, 4, 2
+  {
+     // Hedwig's theme fromn the Harry Potter Movies
+
+    REST, 2, NOTE_D4, 4, NOTE_G4, -4, NOTE_AS4, 8, NOTE_A4, 4,NOTE_G4, 2, 
+    NOTE_D5, 4,NOTE_C5, -2, NOTE_A4, -2,NOTE_G4, -4, NOTE_AS4, 8, NOTE_A4, 4,
+    NOTE_F4, 2, NOTE_GS4, 4, NOTE_D4, -1, NOTE_D4, 4, NOTE_G4, -4, NOTE_AS4, 8, 
+    NOTE_A4, 4, NOTE_G4, 2, NOTE_D5, 4, NOTE_F5, 2, NOTE_E5, 4, NOTE_DS5, 2, 
+    NOTE_B4, 4, NOTE_DS5, -4, NOTE_D5, 8, NOTE_CS5, 4, NOTE_CS4, 2, NOTE_B4, 4
   },
-  {4,8,4,4,4,2,4,8,4,4,4,2,
-    4,8,4,4,4,4,4,4,8,4,4,2
+  {
+
+  // Happy Birthday
+
+  NOTE_C4,4, NOTE_C4,8, NOTE_D4,-4, NOTE_C4,-4, NOTE_F4,-4, NOTE_E4,-2, 
+  NOTE_C4,4, NOTE_C4,8, NOTE_D4,-4, NOTE_C4,-4, NOTE_G4,-4, NOTE_F4,-2, 
+  NOTE_C4,4, NOTE_C4,8, NOTE_C5,-4, NOTE_A4,-4, NOTE_F4,-4, NOTE_E4,-4, 
+  NOTE_D4,-4, NOTE_AS4,4, NOTE_AS4,8, NOTE_A4,-4, NOTE_F4,-4, NOTE_G4,-4,
+  NOTE_F4,-2, NOTE_C4,4, NOTE_C4,8, NOTE_D4,-4, NOTE_C4,-4, NOTE_F4,-4
+ 
   }
 };
 
@@ -212,28 +207,19 @@ void loop() { //The loop function runs forever.
 
 void loop (){
 
+	//Pick a song randomly
   playThisSong = random(1, 4);
 
-  if (digitalRead(button1Pin) == HIGH) { //Check to see if button1 is pressed.
-    
-    for (int i = 0; i<sizeof(melody[playThisSong])/2; i++){
-      ledsShow(noteDurations[playThisSong][i]);
-      tone(buzzerPin, melody[playThisSong][i],noteDurations[playThisSong][i]*1000);
-      
-      delay(200);
-      turnOffRGBLED ();
-      delay(100);
-    }
-    
-      ledsShow(noteDurations[playThisSong][23]);
-      delay(noteDurations[playThisSong][23] *1000);
-      turnOffRGBLED ();
+	//Check to see if button1 is pressed.
+  if (digitalRead(button1Pin) == HIGH) { 
+
+		//Pick a song randomly
+  	playSong(playThisSong); 
+    turnOffRGBLED ();
   }
-         
 }
 
 */
-
 
     //
 	// Level 4 - Menu system
@@ -247,8 +233,9 @@ void loop () {
   
 }
 
-*/
 
+
+*/
             //
             //  Functions
             //
@@ -257,11 +244,10 @@ void loop () {
 void runMenu() 
 {  
 	playThisSong = 9;
-  
     Serial.println("-------");
     Serial.println("Choose a song");
-    Serial.println("1- Song1 - Christmas 1");
-    Serial.println("2- Song2 - Christmas 2");
+    Serial.println("1- Song1 - Christmas");
+    Serial.println("2- Song2 - Harry Potter");
     Serial.println("3- Song3 - Happy Birthday");
     Serial.println("-------");
     
@@ -284,50 +270,56 @@ void runMenu()
   }
   
 	playSong(playThisSong);
-
+	turnOffRGBLED ();
 }
+
 
 // Play song
 
 void playSong(int songCode){
-  for (int i = 0; i<sizeof(melody[songCode])/2; i++){
-    ledsShow(noteDurations[songCode][i]);
-    tone(buzzerPin, melody[songCode][i],noteDurations[songCode][i]*1000);
 
-    delay(200);
-    turnOffRGBLED ();
-    delay(100);
+  int time = 150;
+  // sizeof gives the number of bytes, each int value is composed of two bytes (16 bits)
+  // there are two values per note (pitch and duration), so for each note there are four bytes
+  
+  int notes = sizeof(melody[songCode]) / sizeof(melody[songCode][0]) / 2;
+
+// this calculates the duration of a whole note in ms
+int wholenote = (60000 * 4) / time;
+
+int divider = 0, noteDuration = 0;
+
+  // iterate over the notes of the melody.
+  // Remember, the array is twice the number of notes (notes + durations)
+  for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
+
+    // calculates the duration of each note
+    divider = melody[songCode][thisNote + 1];
+    if (divider > 0) {
+      // regular note, just proceed
+      noteDuration = (wholenote) / divider;
+    } else if (divider < 0) {
+      // dotted notes are represented with negative durations!!
+      noteDuration = (wholenote) / abs(divider);
+      noteDuration *= 1.5; // increases the duration in half for dotted notes
+    }
+	
+
+    // we only play the note for 90% of the duration, leaving 10% as a pause
+    tone(buzzerPin, melody[songCode][thisNote], noteDuration * 0.9);
+
+    //
+
+    // Wait for the specief duration before playing the next note.
+    delay(noteDuration);
+    
+    // stop the waveform generation before the next note.
+    noTone(buzzerPin);
+
+    turnOnLEDByRGB(random(0, 255),random(0, 255),random(0, 255));
   }
-
-  ledsShow(noteDurations[songCode][23]);
-  delay(noteDurations[songCode][23] *1000);
-  turnOffRGBLED ();
-
 }
 
-
-// LED's show while songs are on
-void ledsShow(double note) {
-  int color = 0;
-  
-  if(note ==1){
-    color = 1;
-    } else if (note <2){
-      color = 2;
-    } else if (note ==2){
-      color = 3;
-    } else if (note =2.5){
-      color = 4;
-    } else if (note <=4){
-      color = 5;
-    } else if (note <=8){
-      color = 6;
-    } else {
-      color = 1;
-    }
-                
-  turnOnLEDByRGB (colors[color][0], colors[color][1],colors[color][2]);
-}          
 
 // Turn On led using RGB CODE
 void turnOnLEDByRGB (int red, int green, int blue){
