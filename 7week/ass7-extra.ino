@@ -114,28 +114,8 @@
 	// LCD
   LiquidCrystal lcd( 12,11,7,6,5,4); //These pin numbers are hard coded in on the serial backpack board.
 
-	// RGB LED
-#define RGBRedPin 9 					//The red RGB LED is connected pin 9 of the Arduino.
-#define RGBGreenPin 13 					//The green RGB LED is connected pin 13 of the Arduino.
-#define RGBBluePin 10 					//The blue RGB LED is connected pin 10 of the Arduino.
-
 
 // Variables
-
-
-	// Array with ROYGBP colors
-  int colors[6][3] = {
-    {255,0,0}, 			// red
-    {255,165,0}, 		// orange
-    {255,255,0},		// yellow
-    {0,255,0},			// green
-    {0,0,255},			// blue
-    {128,0,128} 		// purple
-  };  
-
-	//Size of colors array
-  int colorsSize = sizeof(colors)/sizeof(colors[0]);
-
 
 	// Array of songs
 
@@ -144,8 +124,7 @@ int melody[5][60] =
   {
 
     // We Wish You a Merry Christmas
-    // Score available at https://musescore.com/user/6208766/scores/1497501
-
+  
     NOTE_C5,4, NOTE_F5,4, NOTE_F5,8, NOTE_G5,8, NOTE_F5,8, NOTE_E5,8,
     NOTE_D5,4, NOTE_D5,4, NOTE_D5,4, NOTE_G5,4, NOTE_G5,8, NOTE_A5,8, 
     NOTE_G5,8, NOTE_F5,8, NOTE_E5,4, NOTE_C5,4, NOTE_C5,4, NOTE_A5,4, 
@@ -155,9 +134,7 @@ int melody[5][60] =
   {
 
     // Super Mario Bros theme
-    // Score available at https://musescore.com/user/2123/scores/2145
-    // Theme by Koji Kondo
-
+  
 
     NOTE_E5,8, NOTE_E5,8, REST,8, NOTE_E5,8, REST,8, NOTE_C5,8, 
     NOTE_E5,8, NOTE_G5,4, REST,4, NOTE_G4,8, REST,4, NOTE_C5,-4, 
@@ -168,8 +145,7 @@ int melody[5][60] =
   {
 
   // Happy Birthday
-  // Score available at https://musescore.com/user/8221/scores/26906
-
+  
   NOTE_C4,4, NOTE_C4,8, NOTE_D4,-4, NOTE_C4,-4, NOTE_F4,-4, NOTE_E4,-2, 
   NOTE_C4,4, NOTE_C4,8, NOTE_D4,-4, NOTE_C4,-4, NOTE_G4,-4, NOTE_F4,-2, 
   NOTE_C4,4, NOTE_C4,8, NOTE_C5,-4, NOTE_A4,-4, NOTE_F4,-4, NOTE_E4,-4, 
@@ -179,8 +155,7 @@ int melody[5][60] =
   },
   {
      // Hedwig's theme fromn the Harry Potter Movies
-    // Socre from https://musescore.com/user/3811306/scores/4906610
-
+  
     REST, 2, NOTE_D4, 4, NOTE_G4, -4, NOTE_AS4, 8, NOTE_A4, 4,NOTE_G4, 2, 
     NOTE_D5, 4,NOTE_C5, -2, NOTE_A4, -2,NOTE_G4, -4, NOTE_AS4, 8, NOTE_A4, 4,
     NOTE_F4, 2, NOTE_GS4, 4, NOTE_D4, -1, NOTE_D4, 4, NOTE_G4, -4, NOTE_AS4, 8, 
@@ -190,9 +165,7 @@ int melody[5][60] =
   {
   
     // Dart Vader theme (Imperial March) - Star wars 
-    // Score available at https://musescore.com/user/202909/scores/1141521
-    // The tenor saxophone part was used
-
+  
     NOTE_AS4,8, NOTE_AS4,8, NOTE_AS4,8, NOTE_F5,2, NOTE_C6,2, NOTE_AS5,8, 
     NOTE_A5,8, NOTE_G5,8, NOTE_F6,2, NOTE_C6,4, NOTE_AS5,8, NOTE_A5,8, 
     NOTE_G5,8, NOTE_F6,2, NOTE_C6,4, NOTE_AS5,8, NOTE_A5,8, NOTE_AS5,8, 
@@ -201,13 +174,13 @@ int melody[5][60] =
   }
 };
 
-		// Answers
-	String melodyNames[5] = {"Merry Christmas","Mario Bros theme", "Happy Birthday","Hedwig's theme","Dart Vader theme"};
-    double melodyTimes[5] = {0,0,0,0,0};
-    int yesOrNoAnswers[2] = {0,0};
+		// Time measure variables
 
-	// Time measure variables
+	// Variables to Count time
 	double startTime, endTime, idleTime, totalTime;
+
+	// Check if tima started when loop music
+	int startCounter = 0;
 
 		// Game choices
 
@@ -223,9 +196,16 @@ int melody[5][60] =
     // Stop btn at songs
 	int stop0;
 
-    String textToDisplay;
-    int index = 0;
- 	String str1, str2;
+		// Display on screen variables
+	
+	// Final string to display
+	String textToDisplay;
+
+	// Variables to convert double to string and add to textToDisplay
+	String str1, str2;
+	
+	// Size check on idleTime number
+	int index = 0;
 
 // Setup
 
@@ -244,16 +224,8 @@ void setup() {
 
 void loop () {
   
- // 	intro();
-  
-//	playGame();
- 
-//	showScore();
-    
- //   restartGame();
+	startGame () ;
 
-
-  
 }
 
 
@@ -272,6 +244,16 @@ void loop () {
             //  Functions
             //
 
+// Main function - run to start game
+void startGame () {
+
+    intro();
+	playGame();
+	showScore();
+    restartGame();
+}
+
+// Visual indroduction to game
 void intro() {
     displayText(">>> Welcome <<<       .         ");
     delay(200);
@@ -282,7 +264,7 @@ void intro() {
     displayText(">>> Welcome <<<       ....      ");
     delay(200);
   
-  
+  beginGameChoise = 0;
   while (beginGameChoise ==0){
     displayText("    This is:    What's the song?");
     delay(2000);
@@ -291,10 +273,11 @@ void intro() {
     delay(2000);
   }
   
-  instructionsChoise = 0;
-  displayText("> Instructions <");
+
+  displayText("> Instructions <      -->");
   delay(2000);
   
+  instructionsChoise = 0;
   while (instructionsChoise ==0){
     displayText("Pay attention to    the song");
     delay(1000);
@@ -327,22 +310,44 @@ void playGame(){
     stop0=0;
     while(stop0 ==0){
       displayText("   Playing...    STOP btn to go!"); 
-      startTime = millis();
       playSong(i);
     }
 
-    String textToDisplay = "Clock stopped!  Time:";
-    String str1 = String(idleTime, 2); 
-    Serial.println(str1);
+    textToDisplay = "Clock stopped!  Time:";
 
-    for (int i=0; i<5;i++){
-      textToDisplay += str1[i];  
+    
+    // Covnerting double to string
+    str1 = String(idleTime,2); 
+
+    str2 = "";
+    index = 0;
+
+    // Check number size and adding number as string in a variable
+    if(totalTime <10){
+      textToDisplay += " ";
+      for (int i=0;i<4;i++){
+        str2 += str1[i];
+        index = 4;    
+      } 
+      
+  } else {
+    textToDisplay += "";
+    for (int i=0;i<5;i++){
+      str2 += str1[i];
+      index = 5;    
+    } 
+  }
+
+    // Adding string with number to display on screen
+
+    for (int i=0; i<index;i++){
+      textToDisplay += str2[i];  
     }
-    textToDisplay += "s"; 
+    textToDisplay += "s";
 
+    // Display message on screen
     displayText(textToDisplay); 
     delay(2000);	
-
   }
 }
 
@@ -351,13 +356,16 @@ void playGame(){
 
 void showScore() {
   String textToDisplay = "   Total time:       ";
-  String str1 = String(totalTime,2); 
-
   
+  
+    // Covnerting double to string  
+  String str1 = String(totalTime,2); 
   
   String str2 = "";
   index = 0;
+
   
+    // Check number size and adding number as string in a variable
   if(totalTime <10){
     textToDisplay += " ";
     for (int i=0;i<4;i++){
@@ -369,23 +377,27 @@ void showScore() {
     index = 5;
   }
 
-  
+    // Adding string with number to display on screen  
   for (int i=0; i<index;i++){
 	textToDisplay += str2[i];  
   }
   textToDisplay += "s";
-  
+
+    // Display message on screen 
+
   displayText("    END GAME");
   delay(500);
   
   stop0=0;
   while (stop0 !=3){
     
+    // Score message
     if (stop0 !=3){
     displayText(textToDisplay); 
   	delay(1000);    
     }
     
+    // Restart message
     if (stop0 !=3){
     displayText("    Restart?      Press STOP 3x"); 
   	delay(1000);
@@ -406,6 +418,7 @@ void restartGame () {
     displayText("   Restarting         ...."); 
     delay(100);
   
+  // Setting variables as default;
   stop0 = 0;
   beginGameChoise =0;
   instructionsChoise = 0;
@@ -416,19 +429,6 @@ void restartGame () {
   
 }
 
-
-void runMenu() 
-{  
-	playThisSong = 9;
-    Serial.println("-------");
-    Serial.println("Choose a song");
-    Serial.println("1- Song1 - Christmas");
-    Serial.println("2- Song2 - Harry Potter");
-    Serial.println("3- Song3 - Happy Birthday");
-    Serial.println("-------");
-
-
-}
 		// LCD 
 
 // Display text on screen
@@ -472,8 +472,16 @@ void playSong(int songCode){
 
   int divider = 0, noteDuration = 0;
 
+  if (startCounter == 0){
+    
+    // star time clock
+    startTime = millis(); 
+    startCounter = 1;
+  }
+
   // iterate over the notes of the melody.
   // Remember, the array is twice the number of notes (notes + durations)
+    
   for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
 
     // calculates the duration of each note
@@ -487,6 +495,7 @@ void playSong(int songCode){
       noteDuration *= 1.5; // increases the duration in half for dotted notes
     }
 
+    
     // we only play the note for 90% of the duration, leaving 10% as a pause
     tone(buzzerPin, melody[songCode][thisNote], noteDuration * 0.9);
     // Wait for the specief duration before playing the next note.
@@ -500,48 +509,9 @@ void playSong(int songCode){
       idleTime = (endTime - startTime)/1000;
       thisNote = (notes * 2)-2;
       totalTime += idleTime;
+      startCounter = 0;
     }
   }
-}
-
-
-// LED's show while songs are on
-void ledsShow(double note) {
-  int color = 0;
-  
-  if(note ==1){
-    color = 1;
-    } else if (note <2){
-      color = 2;
-    } else if (note ==2){
-      color = 3;
-    } else if (note ==2.5){
-      color = 4;
-    } else if (note <=4){
-      color = 5;
-    } else if (note <=8){
-      color = 6;
-    } else {
-      color = 1;
-    }
-                
-  turnOnLEDByRGB (colors[color][0], colors[color][1],colors[color][2]);
-}          
-
-	// RGB LED
-
-// Turn On led using RGB CODE
-void turnOnLEDByRGB (int red, int green, int blue){
-  analogWrite(RGBRedPin, red); 							//Turn on RGB RED
-  analogWrite(RGBGreenPin, green);						//Turn on RGB GREEN
-  analogWrite(RGBBluePin, blue); 						//Turn on RGB BLUE
-}
-
-// Turn off RGB LED
-void turnOffRGBLED () {
-  analogWrite(RGBRedPin, LOW); 							//Turn off RGB RED
-  analogWrite(RGBBluePin, LOW); 						//Turn off RGB BLUE
-  analogWrite(RGBGreenPin, LOW);						//Turn off RGB GREEN
 }
 
 	// Buttons
