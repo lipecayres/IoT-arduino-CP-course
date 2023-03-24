@@ -31,7 +31,7 @@ void loop() {
       case 4244815616:  // func/Stop
 
       // insert code here
-		Serial.println("Felipe");
+
       break; 
       case 4211392256: // backward
 
