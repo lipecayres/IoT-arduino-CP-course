@@ -31,10 +31,10 @@ byte colPins[COLS] = {6, 7, 8, 9};
 
 Keypad keypad = Keypad(makeKeymap(hexakey), rowPins, colPins, ROWS, COLS);
 
-char *password = "4567";
-char *inputKey = "";
+String password = "4567";
+String inputKey = "";
 
-int position = 0;
+int position = 0, counter;
 int invalidcount = 1;
 
 void setup()
@@ -49,54 +49,68 @@ void setup()
     lcd.begin(16, 2);
     // initial screen
     displayDefaultMessage();
-  
-    digitalWrite(redLed, HIGH);
-    digitalWrite(greenLed, HIGH);
 }
 
 void loop()
 {
-    char key = keypad.getKey();
-  
+
+  // get entry of keyboard
+  char key = keypad.getKey();
+
+  // verify if available
   if (key != NO_KEY)
+  {
+
+    // get complete attempt password from user
+
+    // storage in variable
+
+    // comapare attempt and password
+
+    // if true -> open / false: failed message
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("  SAFE  LOCKER  ");
+    lcd.setCursor(6, 1);
+
+    for (int i = 0; i <= position; i++)
     {
-        lcd.clear();
-        lcd.setCursor(0, 0);
-        lcd.print("  SAFE  LOCKER  ");
-        lcd.setCursor(6, 1);
-
-        for (int i = 0; i <= position; i++)
-        {
-            lcd.print("*");
-            playClickSound();
-        }
-
-        if (key == password[position])
-        {
-            position++;
-            if (position == 4)
-            {
-                unlockdoor();
-                position = 0;
-            }
-        }
-
-        else
-        {
-            ++invalidcount;
-            incorrect();
-            position = 0;
-        }
-        if (invalidcount == 5)
-        {
-            ++invalidcount;
-            torture1();
-        }
-        if (invalidcount == 8)
-        {
-            torture2();
-        }
+      lcd.print("*");
+      playClickSound();
     }
+	position++;
+    counter++;
+    
+    while (counter >=4){
+      if (key == password[position])
+      {
+        position++;
+        if (position == 4)
+        {
+          unlockdoor();
+          position = 0;
+        }
+      }
+
+      else
+      {
+        ++invalidcount;
+        incorrect();
+        position = 0;
+      }
+      if (invalidcount == 5)
+      {
+        ++invalidcount;
+        torture1();
+      }
+      if (invalidcount == 8)
+      {
+        torture2();
+      }
+      counter = 0;
+    }
+  }
     // LOOP ENDS!!!//
 }
 
