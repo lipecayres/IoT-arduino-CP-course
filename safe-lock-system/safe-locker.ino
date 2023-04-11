@@ -31,11 +31,9 @@ byte colPins[COLS] = {6, 7, 8, 9};
 
 Keypad keypad = Keypad(makeKeymap(hexakey), rowPins, colPins, ROWS, COLS);
 
-String password = "4567";
-String inputKey = "";
+String password = "4567", inputKey = "";
 
-int position = 0, counter;
-int invalidcount = 1;
+int position = 0, attempts = 3, validEntry;
 
 void setup()
 {
@@ -54,134 +52,124 @@ void setup()
 void loop()
 {
 
-  // get entry of keyboard
-  char key = keypad.getKey();
+    // get entry of keyboard
+    char key = keypad.getKey();
 
-  // verify if available
-  if (key != NO_KEY)
-  {
-
-    // get complete attempt password from user
-
-    // storage in variable
-
-    // comapare attempt and password
-
-    // if true -> open / false: failed message
-
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("  SAFE  LOCKER  ");
-    lcd.setCursor(6, 1);
-
-    for (int i = 0; i <= position; i++)
+    // verify if available
+    if (key != NO_KEY)
     {
-      lcd.print("*");
-      playClickSound();
-    }
-	position++;
-    counter++;
-    
-    while (counter >=4){
-      if (key == password[position])
-      {
-        position++;
-        if (position == 4)
+
+        // get complete attempt password from user
+
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("  SAFE  LOCKER  ");
+        lcd.setCursor(6, 1);
+
+        for (int i = 0; i <= position; i++)
         {
-          unlockdoor();
-          position = 0;
+            lcd.print("*");
+            playKeySound(1);
+        }
+            inputKey += key;
+            position++;
+      
+      		Serial.println(inputKey);
+    }
+
+    while (position >= 4)
+    {
+        //check password once
+      
+      for(int i = 0; i<4; i++){
+        if (inputKey[i] == password[i]){
+        	validEntry++;
+          Serial.println(validEntry);
         }
       }
-
-      else
+      
+      if (validEntry == 4)
       {
-        ++invalidcount;
-        incorrect();
+        unlockdoor();
+        
         position = 0;
+        validEntry =0;
+        inputKey = "";
+        
+      } else {
+        attempts--;
+        failedAttempt();
+        
+        position = 0;
+        validEntry =0;
+        inputKey = "";
       }
-      if (invalidcount == 5)
-      {
-        ++invalidcount;
-        torture1();
-      }
-      if (invalidcount == 8)
-      {
-        torture2();
-      }
-      counter = 0;
+      displayDefaultMessage();
     }
-  }
-    // LOOP ENDS!!!//
+  
 }
 
-//*******************************************OPEN THE DOOR FUNCTION!!!!***********************************************//
+// functions:
 
+// unlock device
 void unlockdoor()
 {
+  	// welcome message
     lcd.setCursor(0, 0);
-    lcd.println("   DOOR  OPEN   ");
+    lcd.println("     WELCOME    ");
     lcd.setCursor(0, 1);
-    lcd.println("    WELCOME!    ");
+    lcd.println("      GUEST     ");
 
-  	unlockbuzz();
+    playKeySound(3);
 
-    for (pos = 180; pos >= 0; pos -= 5) // goes from 180 degrees to 0 degrees
+
+    // servo position to open device
+    for (pos = 90; pos >= 0; pos -= 5) 
     {
-        myservo.write(pos); // tell servo to go to position in variable 'pos'
-        delay(5);           // waits 15ms for the servo to reach the position
+        myservo.write(pos);
+        delay(5);
     }
-    delay(2000);
 
-    delay(1000);
-    counterbeep();
+    // time device is open until close again
+    delay(5000);
 
-    delay(1000);
+    lockDevice();
 
-    for (pos = 0; pos <= 180; pos += 5) // goes from 0 degrees to 180 degrees
-    {                                   // in steps of 1 degree
-        myservo.write(pos);             // tell servo to go to position in variable 'pos'
+    // servo position to close device
+    for (pos = 0; pos <= 90; pos += 5) 
+    {                                   
+        myservo.write(pos);
         delay(15);
 
         position = 0;
 
         lcd.clear();
-        displayDefaultMessage();
     }
+  
+      // final lock message
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("     LOCKED     ");
+    delay(1000);
 }
 
-//**********************************WRONG CODE FUNCTION*************************************************//
-
-void incorrect()
+// failed attempt to unlock device
+void failedAttempt()
 {
-    delay(500);
     lcd.clear();
-    lcd.setCursor(1, 0);
-    lcd.print("CODE");
-    lcd.setCursor(6, 0);
-    lcd.print("INCORRECT");
-    lcd.setCursor(15, 1);
-    lcd.println(" ");
-    lcd.setCursor(4, 1);
-    lcd.println("GET AWAY!!!");
-
+    lcd.setCursor(0, 0);
+    lcd.print(" WRONG PASSWORD ");
+    lcd.setCursor(0, 1);
+    lcd.print("   Attempts:");
     lcd.setCursor(13, 1);
-    lcd.println(" ");
-    Serial.println("CODE INCORRECT YOU ARE UNAUTHORIZED");
-    digitalWrite(buzz, HIGH);
-    delay(3000);
-    lcd.clear();
-    digitalWrite(buzz, LOW);
-    displayDefaultMessage();
+    lcd.print(attempts);
+
+    // 3 times sound
+    playKeySound(3);
+    
+  delay(500);
 }
 
-// sound to key press
-void playClickSound()
-{
-    digitalWrite(buzz, HIGH);
-    delay(50);
-    digitalWrite(buzz, LOW);
-    delay(50);
-}
 
 // default message on LCD
 void displayDefaultMessage()
@@ -192,181 +180,48 @@ void displayDefaultMessage()
     lcd.println("    PASSWORD    ");
 }
 
-//********************************UNLOCK BUZZ***********************************//
-void unlockbuzz()
+// play sound to key press
+void playKeySound(int ocurrences)
 {
-
+  for (int i = 0;i<ocurrences;i++){
     digitalWrite(buzz, HIGH);
-    delay(80);
+    delay(100);
     digitalWrite(buzz, LOW);
-    delay(80);
-    digitalWrite(buzz, HIGH);
-    delay(80);
-    digitalWrite(buzz, LOW);
-    delay(200);
-    digitalWrite(buzz, HIGH);
-    delay(80);
-    digitalWrite(buzz, LOW);
-    delay(80);
-    digitalWrite(buzz, HIGH);
-    delay(80);
-    digitalWrite(buzz, LOW);
-    delay(80);
+    delay(100);  
+  }
 }
 
-//*******************************COUNTER BEEP*************************************//
-void counterbeep()
+// lock device after some time opened 
+void lockDevice()
 {
-    delay(1200);
+    // regressive counter lock message (upper line)
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.println("   LOCKING IN   ");
+	
+    // counter lock time -> 5sec (lower line)
+  for (int i=5; i>0;i--){
+    lcd.setCursor(7, 1);
+    lcd.print(i);
+	playKeySound(1);
+    delay(1000);
 
-    lcd.clear();
-    digitalWrite(buzz, HIGH);
+    }
+    // play wrong attempt sound (4 times key press)
+    playKeySound(4);
 
-    lcd.setCursor(2, 15);
-    lcd.println(" ");
-    lcd.setCursor(2, 14);
-    lcd.println(" ");
-    lcd.setCursor(2, 0);
-    delay(200);
-    lcd.println("GET IN WITHIN:::");
+    // re-locking message (upper line)
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("   RE-LOCKING   ");
 
-    lcd.setCursor(4, 1);
-    lcd.print("5");
-    delay(200);
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.println("GET IN WITHIN:");
-    digitalWrite(buzz, LOW);
-    delay(1000);
-    // 2
-    digitalWrite(buzz, HIGH);
-    lcd.setCursor(2, 0);
-    lcd.println("GET IN WITHIN:");
-    lcd.setCursor(4, 1); // 2
-    lcd.print("4");
-    delay(100);
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.println("GET IN WITHIN:");
-    digitalWrite(buzz, LOW);
-    delay(1000);
-    // 3
-    digitalWrite(buzz, HIGH);
-    lcd.setCursor(2, 0);
-    lcd.println("GET IN WITHIN:");
-    lcd.setCursor(4, 1); // 3
-    lcd.print("3");
-    delay(100);
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.println("GET IN WITHIN:");
-    digitalWrite(buzz, LOW);
-    delay(1000);
-    // 4
-    digitalWrite(buzz, HIGH);
-    lcd.setCursor(2, 0);
-    lcd.println("GET IN WITHIN:");
-    lcd.setCursor(4, 1); // 4
-    lcd.print("2");
-    delay(100);
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.println("GET IN WITHIN:");
-    digitalWrite(buzz, LOW);
-    delay(1000);
-    //
-    digitalWrite(buzz, HIGH);
-    lcd.setCursor(4, 1);
-    lcd.print("1");
-    delay(100);
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.println("GET IN WITHIN::");
-    digitalWrite(buzz, LOW);
-    delay(1000);
-    // 5
-    digitalWrite(buzz, HIGH);
-    delay(40);
-    digitalWrite(buzz, LOW);
-    delay(40);
-    digitalWrite(buzz, HIGH);
-    delay(40);
-    digitalWrite(buzz, LOW);
-    delay(40);
-    digitalWrite(buzz, HIGH);
-    delay(40);
-    digitalWrite(buzz, LOW);
-    delay(40);
-    digitalWrite(buzz, HIGH);
-    delay(40);
-    digitalWrite(buzz, LOW);
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.print("RE-LOCKING");
-    delay(500);
-    lcd.setCursor(12, 0);
-    lcd.print(".");
-    delay(500);
-    lcd.setCursor(13, 0);
-    lcd.print(".");
-    delay(500);
-    lcd.setCursor(14, 0);
-    lcd.print(".");
-    delay(400);
-    lcd.clear();
-    lcd.setCursor(4, 0);
-    lcd.print("LOCKED!");
-    delay(440);
-}
-//*****************************TORTURE1****************************************//
-void torture1()
-{
-    delay(1000);
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.print("WAIT FOR ");
-    lcd.setCursor(5, 1);
-    lcd.print("15 SECONDS");
-    digitalWrite(buzz, HIGH);
-    delay(15000);
-    digitalWrite(buzz, LOW);
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.print("LOL..");
-    lcd.setCursor(1, 1);
-    lcd.print(" HOW WAS THAT??");
-    delay(3500);
-    lcd.clear();
-}
-//******************************TORTURE2*****************************************//
-void torture2()
-{
-    delay(1000);
-    lcd.setCursor(1, 0);
-    lcd.print(" ");
-    lcd.setCursor(2, 0);
-    lcd.print("EAR DRUMS ARE");
-    lcd.setCursor(0, 1);
-    lcd.print(" PRECIOUS!! ");
-    delay(1500);
-    lcd.clear();
-    lcd.setCursor(1, 0);
-    lcd.print(" WAIT FOR");
-    lcd.setCursor(4, 1);
-    lcd.print(" 1 MINUTE");
-    digitalWrite(buzz, HIGH);
-    delay(55000);
-    counterbeep();
-    lcd.clear();
-    digitalWrite(buzz, LOW);
-    lcd.setCursor(2, 0);
-    lcd.print("WANT ME TO");
-    lcd.setCursor(1, 1);
-    lcd.print("REDICULE MORE??");
-    delay(2500);
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.print("Ha Ha Ha Ha");
-    delay(1700);
-    lcd.clear();
+    // display "dot" counter and key sound (lower line)
+    for (int i=0; i<4;i++){
+        delay(200);
+        Serial.print(".");
+        lcd.setCursor(6+i, 1);
+        lcd.print(".");
+        delay(200);
+        digitalWrite(buzz, LOW);
+    }
 }
