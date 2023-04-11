@@ -31,9 +31,12 @@ byte colPins[COLS] = {6, 7, 8, 9};
 
 Keypad keypad = Keypad(makeKeymap(hexakey), rowPins, colPins, ROWS, COLS);
 
-String password = "4567", inputKey = "";
+// passwords and users
+String password[5] = {"AD00","1020","3040","5060","7080"};
+String users[5] = {"admin","A0012","B0005","C0037","D0010"};
+String inputKey = "";
 
-int position = 0, attempts = 3, validEntry;
+int position, attempts = 3, validEntry, usernamePosition;
 
 void setup()
 {
@@ -79,31 +82,48 @@ void loop()
 
     while (position >= 4)
     {
-        //check password once
-      
-      for(int i = 0; i<4; i++){
-        if (inputKey[i] == password[i]){
-        	validEntry++;
-          Serial.println(validEntry);
+        
+      //check each password once
+      for (int j=0; j<5;j++){
+        for(int i = 0; i<4; i++){
+          
+          // char check
+          if (inputKey[i] == password[j][i]){
+            validEntry++;
+            usernamePosition = j;
+            Serial.println(validEntry);
+          }
+          
+          // stop loop
+          if(validEntry ==4){
+            i = 100;
+          }
         }
       }
       
+      // check if password ok
       if (validEntry == 4)
       {
+      	// unlock device
         unlockdoor();
         
+       	// reset variables to next attempt
         position = 0;
         validEntry =0;
         inputKey = "";
         
       } else {
+        
+        // failed message 
         attempts--;
         failedAttempt();
         
+       	// reset variables to next attempt
         position = 0;
         validEntry =0;
         inputKey = "";
       }
+	// password default message
       displayDefaultMessage();
     }
   
@@ -115,10 +135,12 @@ void loop()
 void unlockdoor()
 {
   	// welcome message
+  	lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.println("     WELCOME    ");
-    lcd.setCursor(0, 1);
-    lcd.println("      GUEST     ");
+    lcd.print("     WELCOME    ");
+    lcd.setCursor(6, 1);
+    lcd.print(users[usernamePosition]);
+  	Serial.println(users[usernamePosition]);
 
     playKeySound(3);
 
