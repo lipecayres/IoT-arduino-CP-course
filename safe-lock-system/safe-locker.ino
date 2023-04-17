@@ -1,3 +1,9 @@
+/*
+Name: Eduardo Pio, Felipe Cayres and Jessica Pereira 
+Date: April 16, 2023
+Time:
+*/
+
 #include <Keypad.h>
 #include <LiquidCrystal.h>
 #include <Servo.h>
@@ -19,10 +25,10 @@ const byte ROWS = 4;
 const byte COLS = 4;
 
 char hexakey[ROWS][COLS] = {
-    {'1', '2', '3', 'A'},
-    {'4', '5', '6', 'B'},
-    {'7', '8', '9', 'C'},
-    {'*', '0', '#', 'D'}};
+  {'1', '2', '3', 'A'},
+  {'4', '5', '6', 'B'},
+  {'7', '8', '9', 'C'},
+  {'*', '0', '#', 'D'}};
 
 byte rowPins[ROWS] = {2, 3, 4, 5};
 byte colPins[COLS] = {6, 7, 8, 9};
@@ -54,14 +60,14 @@ void loop()
 {
 
   //
-  // get complete attempt password from user
+  // get complete attempt password from user --------------
   //
-
+  
   // get entry of keyboard
   char key = keypad.getKey();
 
   // verify if available
-  if (key != NO_KEY)
+  if (key != NO_KEY && attempts > 0)
   {
     // default message keeps on after any attempt
     lcd.clear();
@@ -81,10 +87,10 @@ void loop()
   }
 
   //
-  // waiting for 4 pressed btn's to check password
+  // check password (wait for 4 pressed btn's) --------------
   //
 
-  while (position >= 4)
+  while (position >= 4 && attempts > 0)
   {
 
     // check each stored password once
@@ -102,6 +108,8 @@ void loop()
 
           // track username at this time
           usernamePosition = j;
+        } else {
+        	i=4;
         }
 
         // check if password is valid
@@ -110,6 +118,7 @@ void loop()
           // stop loop
           i = 100;
         }
+
         // if password is invalid after check
         else if (validEntry != 4 && i == 3)
         {
@@ -120,7 +129,7 @@ void loop()
     }
 
     //
-    // return message after check password
+    // return message after check password --------------
     //
 
     // password valid
@@ -152,6 +161,30 @@ void loop()
       validEntry = 0;
       inputKey = "";
     }
+	
+    //
+    // check attempts limit --------------
+    //
+    
+    if (attempts <= 0)
+    {
+      lcd.clear();
+      lcd.setCursor(3, 0);
+      lcd.print("LOCKED FOR");
+      lcd.setCursor(0, 1);
+
+      // Display countdown from 9 to 0
+      for (int i = 9; i >= 0; i--)
+      {
+        lcd.setCursor(7, 1);
+        lcd.print(i);
+        lcd.print("s");
+        delay(1000);
+      }
+
+      attempts = 3;
+    }    
+
     // password default message
     displayDefaultMessage();
   }
