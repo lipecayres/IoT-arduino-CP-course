@@ -1,7 +1,6 @@
 /*
 Name: Eduardo Pio, Felipe Cayres and Jessica Pereira 
 Date: April 16, 2023
-Time:
 */
 
 #include <Keypad.h>
@@ -59,7 +58,7 @@ void setup()
 void loop()
 {
 
-  //
+  // Step 1
   // get complete attempt password from user --------------
   //
   
@@ -86,7 +85,7 @@ void loop()
     position++;
   }
 
-  //
+  // Step 2
   // check password (wait for 4 pressed btn's) --------------
   //
 
@@ -128,7 +127,7 @@ void loop()
       }
     }
 
-    //
+    // Step 3
     // return message after check password --------------
     //
 
@@ -162,7 +161,7 @@ void loop()
       inputKey = "";
     }
 	
-    //
+    // Step 4
     // check attempts limit --------------
     //
     
